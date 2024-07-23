@@ -145,5 +145,5 @@ Generate prisma and sync your schema with database
 Deploy to lambda
 
 ```bash
-  npm deploy
+  npm run deploy
 ```
