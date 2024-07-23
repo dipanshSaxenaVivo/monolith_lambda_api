@@ -125,7 +125,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd monolith-lambda-api
+  cd monolith_lambda_api
 ```
 
 Install dependencies
