@@ -1,6 +1,6 @@
 import { IDependencyContainer } from './dependencies'
-import { ICryptographic } from './iCryptographic'
+import { ICryptography } from './ICryptography'
 import { ILogger } from './iLogger'
 import { IDatabaseClient } from './iDatabaseClient'
 
-export type { IDependencyContainer, ICryptographic, ILogger, IDatabaseClient }
+export type { IDependencyContainer, ICryptography, ILogger, IDatabaseClient }

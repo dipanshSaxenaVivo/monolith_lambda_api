@@ -1,5 +1,6 @@
-import { IDependencyContainer, ICryptographic } from "models/interface";
+import { IDependencyContainer, ICryptography } from "models/interface";
 import { KMS as KMSClient, DecryptRequest, DecryptCommand, EncryptCommand } from "@aws-sdk/client-kms";
+console.log('kms utility')
 
 let kmsModule = new KMSClient();
 
@@ -19,7 +20,7 @@ const decrypt = async (CipherText: string): Promise<string | undefined> => {
       LambdaFunctionName: process.env.AWS_LAMBDA_FUNCTION_NAME || "",
     },
   };
-  console.log(params,'encoded')
+  console.log(params, 'encoded')
   try {
     let decrypted;
     let decryptCommand = new DecryptCommand(params)
@@ -33,10 +34,10 @@ const decrypt = async (CipherText: string): Promise<string | undefined> => {
     throw new Error("Error decrypting key:", { cause: error });
   }
 };
-var DB_KMS_KEY_ID:any
-// if (process.env.DB_KMS_KEY_ID_ENC) {
-//   var DB_KMS_KEY_ID = await decrypt(process.env.DB_KMS_KEY_ID_ENC);
-// }
+var DB_KMS_KEY_ID: string | undefined
+if (process.env.DB_KMS_KEY_ID_ENC) {
+  var DB_KMS_KEY_ID = await decrypt(process.env.DB_KMS_KEY_ID_ENC);
+}
 
 /**
  * Encrypts the given data using KMS.
@@ -61,7 +62,7 @@ let encrypt = async (
       LambdaFunctionName: process.env.AWS_LAMBDA_FUNCTION_NAME || "",
     },
   };
-  console.log(params,'encoded values');
+  console.log(params, 'encoded values');
   try {
     let encryptCommand = new EncryptCommand(params)
     const result = await kmsModule.send(encryptCommand);
@@ -94,7 +95,7 @@ const get_encrypted_environment_variable = (
   }
 };
 
-const KMS: ICryptographic = {
+const KMS: ICryptography = {
   decrypt,
   encrypt,
   get_encrypted_environment_variable,

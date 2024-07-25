@@ -3,12 +3,12 @@ import { IDependencyContainer } from 'models/interface'
 import { APIHttpProxyEvent } from 'models/types';
 
 /**
- * Handles decryption requests using the ICryptographic service in IDependencyContainer.
+ * Handles decryption requests using the ICryptography service in IDependencyContainer.
  *
  * Validates the request body and returns appropriate error responses.
  * Optionally logs the decryption result.
  *
- * @param {IDependencyContainer} DC - Dependency container with ICryptographic and ILogger access.
+ * @param {IDependencyContainer} DC - Dependency container with ICryptography and ILogger access.
  * @param {APIHttpProxyEvent} event - HTTP proxy event containing the encrypted data.
  * @param {Context} context - AWS Lambda context.
  * @returns {Promise<APIGatewayProxyResult>} - Response object with decrypted data or an error message.

@@ -1,9 +1,9 @@
-import { ICryptographic } from "./iCryptographic"
+import { ICryptography } from "./ICryptography"
 import { IDatabaseClient } from "./iDatabaseClient"
 import { ILogger } from "./iLogger"
 
 export interface IDependencyContainer {
   logger: ILogger,
-  KMS: ICryptographic,
+  KMS: ICryptography,
   db_client: IDatabaseClient
 }

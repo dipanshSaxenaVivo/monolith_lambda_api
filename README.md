@@ -170,7 +170,7 @@ Deploy to lambda
 
   - Database Client: Prisma for database interactions.
   - Logger: A custom logger for tracking application events.
-  - Cryptographic: For handling encryption and decryption tasks using AWS KMS.
+  - Cryptography: For handling encryption and decryption tasks using AWS KMS.
 
 ### Implementation
 

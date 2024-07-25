@@ -1,4 +1,5 @@
 import { IDependencyContainer, ILogger } from "models/interface";
+console.log('console log utility')
 
 const log = (...args: any[]) => {
   console.log(...args);

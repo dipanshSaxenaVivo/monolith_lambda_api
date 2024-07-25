@@ -1,4 +1,4 @@
-export interface ICryptographic {
+export interface ICryptography {
   /**
  * Decrypts the given cipherText using KMS.
  *
