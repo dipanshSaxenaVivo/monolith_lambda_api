@@ -42,6 +42,14 @@ Typescript-Monolith-Lambda-Api-Template
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
+    <li>
+      <a href="#documentation">Documentation</a>
+      <ul>
+        <li><a href="#injector-and-dependency-container">Injector & Dependency Container</a></li>
+        <li><a href="#route-handling">Route Handling</a></li>
+        <li><a href="#esbuild-configuration">Esbuild Configuration</a></li>
+      </ul>
+    </li>
     <!-- <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
@@ -95,23 +103,25 @@ This repository provides a well-structured, production-ready template for buildi
 <br/>
 
 # Getting Started
+
 This section walks you through the prerequisites for development and guides you in cloning this repository, deploying your API to AWS Lambda, and customizing configurations.
 
 ## Prerequisites
 
-  - *aws-cli*: must configure aws cli with an
+- _aws-cli_: must configure aws cli with an
   IAM user having permission to update lambda invoke lambda and interact with the s3bucket.
 
-  - *7zip*: must install 7zip and add it's path to environment variable of your local machine.
+- _7zip_: must install 7zip and add it's path to environment variable of your local machine.
 
-  - *mongodb*: 
-    - must create a mongodb database and include it's connection url in .env and it's encrypted value in your lambda function's environment variable as well. 
-    - additionally please add db name at the end of your mongodb string for eg. `mongodb+srv://username:password@clusterName.uniqueID.mongodb.net/dbname?retryWrites=true&w=majority&appName=clusterName`.
-    - also refer to this article before trying to connect your mongodb with lambda, [*article*](https://medium.com/@dipansh.dev.saxena/connecting-mongodb-atlas-to-aws-lambda-a-novices-tale-41ff0a5b3d8e).
+- _mongodb_:
 
-  - *aws-resources*: create a lambda function from aws console and add a role to that lambda which has the policy of an kms key which will be used for encrypting and decrypting data, also create an s3 bucket for uploading your lambda code, remember their name.
+  - must create a mongodb database and include it's connection url in .env and it's encrypted value in your lambda function's environment variable as well.
+  - additionally please add `db name` at the end of your mongodb string for eg. `mongodb+srv://username:password@clusterName.uniqueID.mongodb.net/`db name`?retryWrites=true&w=majority&appName=clusterName`.
+  - also refer to this article before trying to connect your mongodb with lambda, [_article_](https://medium.com/@dipansh.dev.saxena/connecting-mongodb-atlas-to-aws-lambda-a-novices-tale-41ff0a5b3d8e).
 
-  - *environment-variables*: there are 2 environment variables we have to use locally while building the code
+- _aws-resources_: create a lambda function from aws console and add a role to that lambda which has the policy of an kms key which will be used for encrypting and decrypting data, also create an s3 bucket for uploading your lambda code, remember their name.
+
+- _environment-variables_: there are 2 environment variables we have to use locally while building the code
   which is DATABASE_URL self explanatory and PRISMA_BINARY_TARGET read about it in this article [*prisma-binaries*](https://www.prisma.io/docs/orm/prisma-schema/overview/generators#binary-targets)
 
 ## Installation
@@ -147,3 +157,68 @@ Deploy to lambda
 ```bash
   npm deploy
 ```
+
+# Documentation
+
+## Injector and Dependency Container
+
+### Overview
+
+- Dependency Injection (DI) promotes cleaner, more modular code by decoupling the creation of dependencies from their usage. This improves testability and maintainability, making it easier to manage and scale the application.
+
+- #### Pre-included Dependencies
+
+  - Database Client: Prisma for database interactions.
+  - Logger: A custom logger for tracking application events.
+  - Cryptographic: For handling encryption and decryption tasks using AWS KMS.
+
+### Implementation
+
+Dependencies are injected into handlers via a centralized injector module, which configures and provides these dependencies to the appropriate handlers based on their needs.
+
+we expose a applier function from our dependency module
+which simply adds it's functionality into the key of dependency container.
+
+> example of applier function
+
+```
+/**
+ * applies KMS dependency to the given dependency container
+ *
+ * @param {Omit<IDependencyContainer, 'KMS'>} DC
+ * @returns {IDependencyContainer}
+ */
+export const apply_kms = (
+  DC: Omit<IDependencyContainer, "KMS">
+): IDependencyContainer => {
+  console.log("apply kms called");
+  return { ...DC, KMS: KMS };
+};
+```
+
+> example of applying dependency
+
+```
+const injector_applied_kms = apply_kms({})
+```
+
+now, if we want to apply another dependency for our handlers
+we just have to pass `injector_applied_kms` to the corresponding dependency's applier function.
+
+> example of applying prisma dependency
+
+```
+const injector_applied_prisma_and_kms = apply_kms(injector_applied_kms)
+```
+
+usually we would have to apply all available dependency to all of our handlers so we can instantiate our injector with all applier functions like.
+
+> example of applying all dependencies
+
+```
+let injector = apply_prisma(apply_console_logger(apply_kms({} as any)));
+```
+
+just be aware of lifecycle methods of aws lambda cold start, warm and shutdown phase
+because our dependencies are instantiated in cold start and they are available till the shutdown phase of lambda,
+they don't instantiate again in warm phase.
