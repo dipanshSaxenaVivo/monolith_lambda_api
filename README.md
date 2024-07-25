@@ -135,7 +135,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd monolith-lambda-api
+  cd monolith_lambda_api
 ```
 
 Install dependencies
@@ -155,7 +155,7 @@ Generate prisma and sync your schema with database
 Deploy to lambda
 
 ```bash
-  npm deploy
+  npm run deploy
 ```
 
 # Documentation
