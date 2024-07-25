@@ -3,26 +3,26 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-# Function to prompt for user input
-prompt_for_bucket_name() {
-  read -p "Please enter the S3 bucket name: " S3_BUCKET_NAME
-  if [ -z "$S3_BUCKET_NAME" ]; then
-    echo "S3 bucket name cannot be empty. Please try again."
-    prompt_for_bucket_name
-  fi
-}
-# Function to prompt for user input
-prompt_for_lambda_name() {
-  read -p "Please enter the Lambda function name: " LAMBDA_FUNCTION_NAME
-  if [ -z "$LAMBDA_FUNCTION_NAME" ]; then
-    echo "Lambda function name cannot be empty. Please try again."
-    prompt_for_input
-  fi
-}
+# # Function to prompt for user input
+# prompt_for_bucket_name() {
+#   read -p "Please enter the S3 bucket name: " S3_BUCKET_NAME
+#   if [ -z "$S3_BUCKET_NAME" ]; then
+#     echo "S3 bucket name cannot be empty. Please try again."
+#     prompt_for_bucket_name
+#   fi
+# }
+# # Function to prompt for user input
+# prompt_for_lambda_name() {
+#   read -p "Please enter the Lambda function name: " LAMBDA_FUNCTION_NAME
+#   if [ -z "$LAMBDA_FUNCTION_NAME" ]; then
+#     echo "Lambda function name cannot be empty. Please try again."
+#     prompt_for_input
+#   fi
+# }
 
 # # hardcoded variables
-# S3_BUCKET_NAME="testingdi-lambda-code"
-# LAMBDA_FUNCTION_NAME="testingDI"
+S3_BUCKET_NAME="testingdi-lambda-code"
+LAMBDA_FUNCTION_NAME="testingDI"
 
 # Directory paths
 SOURCE_DIR="$(pwd)"

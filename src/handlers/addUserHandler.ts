@@ -38,10 +38,7 @@ export const addUserHandler = async (DC: IDependencyContainer, event: APIHttpPro
   // }
   try {
     const result = await DC.db_client.users.create({
-      data: {
-        email: body.email,
-        name: body.name,
-      },
+      data: {...body},
     })
 
     return {

@@ -17,7 +17,7 @@ export const apply_prisma = async (
    * so, we would have to decrypt our connection string before using it.
    */
   let decrypted_env_string = await DC.KMS.get_encrypted_environment_variable(
-    process.env.MONGO_DB_URI!
+    "MONGO_DB_URI"
   );
 
   /**

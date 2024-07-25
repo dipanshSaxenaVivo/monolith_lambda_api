@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node build.js",
-    "deploy": "chmod +x cicd.sh && ./cicd.sh"
+    "deploy": "chmod +x cicd.sh && bash ./cicd.sh"
   },
   "author": "",
   "license": "ISC",

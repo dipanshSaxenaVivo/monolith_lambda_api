@@ -22,15 +22,13 @@ export const updateUserHandler = async (DC: IDependencyContainer, event: APIHttp
       body: JSON.stringify({ message: 'bad request' }),
     }
   }
+  console.log(body,'body')
   try {
     const result = await DC.db_client.users.update({
       where:{
         id:body.id
       },
-      data: {
-        email: body.email && body.email,
-        name: body.name && body.name,
-      },
+      data: {...(()=>{delete (body as any).id; return body})()},
     })
 
     return {
