@@ -1,3 +1,4 @@
-import { routeEnums } from './routeEnums'
+import { routeEnums } from './routeEnum'
+import { Role } from './roleEnum'
 
-export { routeEnums }
+export { routeEnums, Role }

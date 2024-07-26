@@ -65,8 +65,8 @@ echo "Zipping the contents of the dist directory..."
 cd "${DIST_DIR}"
 7z a -tzip "${SOURCE_DIR}/dist.zip" *
 
-# Prompt for S3 bucket name
-prompt_for_bucket_name
+# # Prompt for S3 bucket name
+# prompt_for_bucket_name
 
 # Step 8: Upload to S3
 echo "Uploading dist.zip to s3://${S3_BUCKET_NAME}/..."
@@ -79,8 +79,8 @@ echo "Deployment completed. S3 Object URL: ${S3_OBJECT_URL}"
 # Return the S3 object link
 echo "S3 Object URL: ${S3_OBJECT_URL}"
 
-# Prompt for lambda functionn name
-prompt_for_lambda_name
+# # Prompt for lambda functionn name
+# prompt_for_lambda_name
 
 # Step 10: Upload the S3_OBJECT_URL to the specified Lambda function
 echo "Uploading S3 object URL to Lambda function: ${LAMBDA_FUNCTION_NAME}..."

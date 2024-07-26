@@ -1,6 +1,7 @@
 
 import * as Prisma from '@prisma/client';
 import { APIGatewayProxyResult, Context } from 'aws-lambda';
+import { Role } from 'models/enums';
 import { IDependencyContainer } from 'models/interface'
 import { APIHttpProxyEvent } from 'models/types';
 import { hasRequiredFields } from 'utility';
@@ -16,7 +17,7 @@ import { hasRequiredFields } from 'utility';
  * @returns {Promise<APIGatewayProxyResult>} A Promise resolving to an API Gateway Proxy Result object.
  */
 export const addUserHandler = async (DC: IDependencyContainer, event: APIHttpProxyEvent, context: Context): Promise<APIGatewayProxyResult> => {
-  let body:Omit<Prisma.users,'password'|'id'> = event.body && JSON.parse(event.body)
+  let body: Omit<Prisma.users, 'password' | 'id'> = event.body && JSON.parse(event.body)
   if (!body || !hasRequiredFields(body, "email", "name")) {
     return {
       statusCode: 400,
@@ -37,9 +38,22 @@ export const addUserHandler = async (DC: IDependencyContainer, event: APIHttpPro
   //   }
   // }
   try {
-    const result = await DC.db_client.users.create({
-      data: {...body},
-    })
+    // Setting multiple roles
+    const userRoles = Role.User | Role.Support;
+
+    // Checking for a specific role
+    const hasUserRole = (userRoles & Role.User) !== 0;
+    const hasSupportRole = (userRoles & Role.Support) !== 0;
+
+    // Example: Assigning roles to a user in Prisma
+    let result = await DC.db_client.users.create({
+      data: {
+        email: body.email,
+        name:body.name,
+        phoneNumber: body.phoneNumber && body.phoneNumber,
+        role: userRoles
+      }
+    });
 
     return {
       statusCode: 200,

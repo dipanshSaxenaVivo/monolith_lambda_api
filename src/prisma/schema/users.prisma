@@ -4,7 +4,10 @@ model users {
   name        String
   phoneNumber Int
   password    String?
+  role        Int
 
   @@unique([email,phoneNumber])
-  @@fulltext([name])
+  @@unique([role])
+  @@index([name])
+  @@index(name:"new",[name,role])
 }
