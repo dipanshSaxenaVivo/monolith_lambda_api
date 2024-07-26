@@ -59,6 +59,8 @@ npx prisma generate
 # Step 6: Delete the .env file before zipping
 echo "Deleting .env file from dist directory..."
 rm "${DIST_DIR}/.env"
+rm rf "${DIST_DIR}/node_modules/prisma"
+rm rf "${DIST_DIR}/node_modules/@prisma/engines"
 
 # Step 7: Zip the contents of the dist directory using 7zip
 echo "Zipping the contents of the dist directory..."
