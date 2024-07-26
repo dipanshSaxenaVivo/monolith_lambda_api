@@ -15,15 +15,16 @@
     "schema": "src/prisma/schema"
   },
   "dependencies": {
-    "@prisma/client": "^5.16.2"
+    "@prisma/client": "^5.16.2",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
-    "esbuild": "^0.23.0",
+    "@aws-sdk/client-kms": "^3.614.0",
     "@types/aws-lambda": "^8.10.141",
     "@types/node": "^20.14.10",
     "aws-lambda": "^1.0.7",
+    "esbuild": "^0.23.0",
     "prisma": "^5.16.2",
-    "ts-node": "^10.9.2",
-    "@aws-sdk/client-kms": "^3.614.0"
+    "ts-node": "^10.9.2"
   }
 }
