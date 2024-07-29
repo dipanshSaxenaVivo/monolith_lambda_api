@@ -2,12 +2,12 @@ model users {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   email       String
   name        String
-  phoneNumber Int
+  phoneNumber String?
   password    String?
   role        Int
 
   @@unique([email,phoneNumber])
-  @@unique([role])
+  // @@unique([role])
   @@index([name])
   @@index(name:"new",[name,role])
 }

@@ -28,7 +28,7 @@ let injector = await apply_prisma(injector_applied_logger_and_kms)
  * 
  */
 export const handler = async (event: APIHttpProxyEvent, context: Context): Promise<APIGatewayProxyResult> => {
-  injector.logger.log(event)
+  injector.logger.log('event object %O,\n context object %O',event.requestContext.authorizer.lambda,context)
   if (!(event.rawPath in route_container)) {
     return {
       statusCode: 404,

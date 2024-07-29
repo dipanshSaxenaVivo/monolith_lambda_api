@@ -1,3 +1,3 @@
-import { hasRequiredFields } from './checkFieldsInObject'
+import { hasRequiredFields, getAllKeysFromEnum } from './checkFieldsInObject'
 
-export { hasRequiredFields }
+export { hasRequiredFields, getAllKeysFromEnum }

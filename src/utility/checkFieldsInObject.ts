@@ -14,3 +14,9 @@ export function hasRequiredFields(obj: object, ...fields: (string | string[])[])
   const flatFields = fields.flat();
   return flatFields.every(field => obj.hasOwnProperty(field));
 }
+
+export const getAllKeysFromEnum = (enumObject: any): number[] => {
+  return Object.keys(enumObject)
+  .filter((key) => !isNaN(Number(enumObject[key])))
+  .map((key) => Number(enumObject[key]));
+};
