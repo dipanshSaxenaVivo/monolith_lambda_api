@@ -24,7 +24,7 @@ export const encryptHandler = async (DC: IDependencyContainer, event: APIHttpPro
   }
   try {
 
-    let result = await DC.KMS.encrypt(body.data,body?.key)
+    let result = await DC.Cryptography.encrypt(body.data,body?.key)
     DC.logger.log(result,'encrypt request handler')
 
     return {

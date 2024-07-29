@@ -16,7 +16,7 @@ export const apply_prisma = async (
    * we store our connection string in environment variable of lambda and we encrypt it via a kms key,
    * so, we would have to decrypt our connection string before using it.
    */
-  let decrypted_env_string = await DC.KMS.get_encrypted_environment_variable(
+  let decrypted_env_string = await DC.Cryptography.get_encrypted_environment_variable(
     "MONGO_DB_URI"
   );
 

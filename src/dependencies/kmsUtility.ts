@@ -111,5 +111,5 @@ export const apply_kms = (
   DC: Omit<IDependencyContainer, "KMS">
 ): IDependencyContainer => {
   console.log("apply kms called");
-  return { ...DC, KMS: KMS };
+  return { ...DC, Cryptography: KMS };
 };

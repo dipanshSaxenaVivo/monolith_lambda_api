@@ -23,7 +23,7 @@ export const decryptHandler = async (DC: IDependencyContainer, event: APIHttpPro
   }
   try {
 
-    let result = await DC.KMS.decrypt(body)
+    let result = await DC.Cryptography.decrypt(body)
     DC.logger.log(result, 'decrypt request handler')
 
     return {
