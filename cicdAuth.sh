@@ -59,55 +59,55 @@ rm -rf "${DIST_DIR}/*"
 
 # Directory paths
 SOURCE_DIR="$(pwd)"
-DIST_DIR="${SOURCE_DIR}/dist"
-PRISMA_SRC_DIR="${SOURCE_DIR}/src/prisma"
-PRISMA_DIST_DIR="${DIST_DIR}/src/prisma"
+AUTHORIZER_DIR="${SOURCE_DIR}/authorizer/dist"
+# PRISMA_SRC_DIR="${SOURCE_DIR}/src/prisma"
+# PRISMA_DIST_DIR="${AUTHORIZER_DIR}/src/prisma"
 
 # Step 1: Transpile the TypeScript code
 echo "Running npm build..."
-npm run build
+npm run build:auth
 
 # Step 2: Copy the prisma folder to dist/src
-echo "Copying prisma folder to dist/src..."
-mkdir -p "${PRISMA_DIST_DIR}"
-cp -r "${PRISMA_SRC_DIR}/." "${PRISMA_DIST_DIR}"
+# echo "Copying prisma folder to dist/src..."
+# mkdir -p "${PRISMA_DIST_DIR}"
+# cp -r "${PRISMA_SRC_DIR}/." "${PRISMA_DIST_DIR}"
 
 # Step 3: Copy the .env file to dist directory
-echo "Copying .env to dist directory..."
-cp "${SOURCE_DIR}/.env" "${DIST_DIR}"
+# echo "Copying .env to dist directory..."
+# cp "${SOURCE_DIR}/.env" "${DIST_DIR}"
 
 # Step 4: Move package.json to dist directory
-echo "Copying package.json to dist directory..."
-cp "${SOURCE_DIR}/package.json" "${DIST_DIR}"
+# echo "Copying package.json to dist directory..."
+# cp "${SOURCE_DIR}/package.json" "${DIST_DIR}"
 
 # Step 5: Install production dependencies and generate Prisma client
-cd "${DIST_DIR}"
+cd "${AUTHORIZER_DIR}"
 
 echo "Installing production dependencies..."
 npm install --production
 
-echo "Generating Prisma client..."
-npx prisma generate
+# echo "Generating Prisma client..."
+# npx prisma generate
 
 # Step 6: Delete the .env file before zipping
 echo "Deleting .env file from dist directory..."
-rm "${DIST_DIR}/.env"
-find "${DIST_DIR}/node_modules/.bin" -mindepth 1 -delete
-find "${DIST_DIR}/node_modules/.cache" -mindepth 1 -delete
-rm -rf "${DIST_DIR}/node_modules/prisma"
-rm -rf "${DIST_DIR}/node_modules/@prisma/engines"
+rm "${AUTHORIZER_DIR}/.env"
+find "${AUTHORIZER_DIR}/node_modules/.bin" -mindepth 1 -delete
+find "${AUTHORIZER_DIR}/node_modules/.cache" -mindepth 1 -delete
+rm -rf "${AUTHORIZER_DIR}/node_modules/prisma"
+rm -rf "${AUTHORIZER_DIR}/node_modules/@prisma/engines"
 
 # Step 7: Zip the contents of the dist directory using 7zip
 echo "Zipping the contents of the dist directory..."
-cd "${DIST_DIR}"
-7z a -tzip "${SOURCE_DIR}/dist.zip" *
+cd "${AUTHORIZER_DIR}"
+7z a -tzip "${AUTHORIZER_DIR}/dist.zip" *
 
 # # Prompt for S3 bucket name
 # prompt_for_bucket_name
 
 # Step 8: Upload to S3
 echo "Uploading dist.zip to s3://${S3_BUCKET_NAME}/..."
-aws s3 cp "${SOURCE_DIR}/dist.zip" "s3://${S3_BUCKET_NAME}/"
+aws s3 cp "${AUTHORIZER_DIR}/dist.zip" "s3://${S3_BUCKET_NAME}/"
 
 # Step 9: Return the S3 object link
 S3_OBJECT_URL="https://s3.amazonaws.com/${S3_BUCKET_NAME}/dist.zip"
@@ -123,5 +123,6 @@ echo "S3 Object URL: ${S3_OBJECT_URL}"
 echo "Uploading S3 object URL to Lambda function: ${LAMBDA_FUNCTION_NAME}..."
 aws lambda update-function-code --function-name ${LAMBDA_FUNCTION_NAME} --s3-bucket ${S3_BUCKET_NAME} --s3-key dist.zip
 # Clean up
-rm "${SOURCE_DIR}/dist.zip"
+rm "${AUTHORIZER_DIR}/dist.zip"
+rm "${AUTHORIZER_DIR}/dist"
 
