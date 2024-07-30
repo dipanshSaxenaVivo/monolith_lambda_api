@@ -4,3 +4,4 @@
 /event.json
 /package-lock.json
 /.gitignore
+/authorizer/dist

@@ -1,3 +1,5 @@
-import {addUserSchema} from './addUserSchema'
+import { addUserSchema } from './addUserSchema'
+import { idValidateSchema } from './idValidateSchema'
+import { updateUserSchema } from './updateUserSchema'
 
-export {addUserSchema}
+export { addUserSchema, idValidateSchema, updateUserSchema }

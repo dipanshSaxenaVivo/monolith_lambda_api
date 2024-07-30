@@ -1,5 +1,5 @@
 import { IDependencyContainer } from './dependencies'
-import { ICryptography } from './ICryptography'
+import { ICryptography } from './iCryptography'
 import { ILogger } from './iLogger'
 import { IDatabaseClient } from './iDatabaseClient'
 

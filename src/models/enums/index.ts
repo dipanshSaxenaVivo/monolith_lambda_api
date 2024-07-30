@@ -1,4 +1,5 @@
-import { routeEnums } from './routeEnum'
+import { RouteEnums } from './routeEnum'
 import { Role } from './roleEnum'
+import { ResponseCodeEnum } from './responseCodeEnum'
 
-export { routeEnums, Role }
+export { RouteEnums, Role, ResponseCodeEnum }

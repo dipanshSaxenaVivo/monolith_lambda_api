@@ -1,7 +1,7 @@
 import { build } from "esbuild";
 
 build({
-  entryPoints: ['./authorizer/index.ts'],
+  entryPoints: ['./authorizer/index.ts','./authorizer/routes/index.ts','./authorizer/enums/index.ts'],
   outdir: "./authorizer/dist",
   bundle: true,
   platform: "node",

@@ -3,37 +3,6 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-# User prompt for custom authorizer deployment
-read -p "Deploy custom authorizer (y/N)? " DEPLOY_AUTHORIZER
-
-if [[ "$DEPLOY_AUTHORIZER" =~ ^[Yy]$ ]]; then
-  # Authorizer directory path
-  AUTHORIZER_DIR="${SOURCE_DIR}/authorizer"
-
-  # Check if authorizer directory exists
-  if [ ! -d "$AUTHORIZER_DIR" ]; then
-    echo "Authorizer directory not found. Skipping..."
-    exit 0
-  fi
-
-  # Transpile authorizer code using esbuild (replace with your transpiler if needed)
-  echo "Transpiling authorizer code..."
-  npx esbuild ${$AUTHORIZER_DIR}/**/*.ts --splitting --chunk-names:'./chunks[name]-[hash]' --outdir=${$AUTHORIZER_DIR}/dist --bundle --platform=node --packages=external --out-extension:.js=.mjs --external:'aws-lambda' --external:'yup' --external:'@aws-sdk/client-kms' --external:'prisma' --external:'@prisma/client' --format=esm --target:'ES2022'
-
-  # Bundle the transpiled code with 7zip
-  echo "Bundling authorizer code with 7zip..."
-  7z a -tzip "${AUTHORIZER_DIR}"/authorizer.zip "${AUTHORIZER_DIR}"/dist/*
-
-  # Lambda function name for deployment (replace with yours)
-  LAMBDA_FUNCTION_NAME="testingdi-authorizer-function"
-
-  # Upload the authorizer zip to Lambda
-  echo "Uploading authorizer.zip to Lambda function: ${LAMBDA_FUNCTION_NAME}..."
-  aws lambda update-function-code --function-name ${LAMBDA_FUNCTION_NAME} --zip-file fileb://"${AUTHORIZER_DIR}"/authorizer.zip
-
-  # Clean up
-  rm "${AUTHORIZER_DIR}"/authorizer.zip
-
 # # Function to prompt for user input
 # prompt_for_bucket_name() {
 #   read -p "Please enter the S3 bucket name: " S3_BUCKET_NAME
@@ -55,13 +24,16 @@ if [[ "$DEPLOY_AUTHORIZER" =~ ^[Yy]$ ]]; then
 S3_BUCKET_NAME="testingdi-lambda-code"
 LAMBDA_FUNCTION_NAME="testingDI"
 
-rm -rf "${DIST_DIR}/*"
+
 
 # Directory paths
 SOURCE_DIR="$(pwd)"
 DIST_DIR="${SOURCE_DIR}/dist"
 PRISMA_SRC_DIR="${SOURCE_DIR}/src/prisma"
 PRISMA_DIST_DIR="${DIST_DIR}/src/prisma"
+
+# Step 0: Clear dist folder
+find "${DIST_DIR}" -mindepth 1 -delete
 
 # Step 1: Transpile the TypeScript code
 echo "Running npm build..."

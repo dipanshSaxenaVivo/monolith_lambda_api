@@ -5,6 +5,9 @@ export const handler = (
   context: Context
 ) => {
   try {
+
+    console.log(event,context)
+
     return {
       isAuthorized: true,
       context: {

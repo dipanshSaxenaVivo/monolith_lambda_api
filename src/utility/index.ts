@@ -1,3 +1,4 @@
-import { hasRequiredFields, getAllKeysFromEnum } from './checkFieldsInObject'
+import { hasRequiredFields, getAllKeysFromEnum } from './common'
+import {handlerErrorReturn} from './handlerReturnGenerator'
 
-export { hasRequiredFields, getAllKeysFromEnum }
+export { hasRequiredFields, getAllKeysFromEnum, handlerErrorReturn}
