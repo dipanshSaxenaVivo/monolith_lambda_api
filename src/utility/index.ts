@@ -1,4 +1,4 @@
 import { hasRequiredFields, getAllKeysFromEnum } from './common'
-import {handlerErrorReturn} from './handlerReturnGenerator'
+import { createStandardError } from './createStandardError'
 
-export { hasRequiredFields, getAllKeysFromEnum, handlerErrorReturn}
+export { hasRequiredFields, getAllKeysFromEnum, createStandardError }

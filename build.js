@@ -9,6 +9,7 @@ build({
     "./src/utility/index.ts",
     "./src/middleware/index.ts",
     "./src/schema/index.ts",
+    "./src/resources/index.ts",
   ],
   outdir: "dist/src",
   bundle: true,

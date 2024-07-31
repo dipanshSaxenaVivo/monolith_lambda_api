@@ -1,4 +1,4 @@
-import { applyMiddleware } from './applyMiddleware'
-import { validationMiddleware } from './validationMiddleware'
+import { apply_middleware } from './applyMiddleware'
+import { validation_middleware } from './validationMiddleware'
 
-export { applyMiddleware, validationMiddleware }
+export { apply_middleware, validation_middleware }

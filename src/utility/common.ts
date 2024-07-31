@@ -15,8 +15,24 @@ export function hasRequiredFields(obj: object, ...fields: (string | string[])[])
   return flatFields.every(field => obj.hasOwnProperty(field));
 }
 
-export const getAllKeysFromEnum = (enumObject: any): number[] => {
-  return Object.keys(enumObject)
-  .filter((key) => !isNaN(Number(enumObject[key])))
-  .map((key) => Number(enumObject[key]));
+/**
+ * Extracts the numeric values from an enum object.
+
+ * @template T - The type of the enum object, which must be a record of number-to-string pairs.
+ * @param {T} enumObject - The enum object to extract values from.
+ * @returns {number[]} An array of numeric values from the enum.
+ */
+export const getAllKeysFromEnum = <T extends Record<number, string>>(enumObject: T): number[] => {
+  return Object.values(enumObject).filter(value => typeof value === 'number');
+};
+
+/**
+ * Extracts the string values from an enum object.
+
+ * @template T - The type of the enum object, which must be a record of number-to-string pairs.
+ * @param {T} enumObject - The enum object to extract values from.
+ * @returns {string[]} An array of numeric values from the enum.
+ */
+export const getAllValuesFromEnum = <T extends Record<number, string>>(enumObject: T): string[] => {
+  return Object.values(enumObject).filter(value => typeof value === 'string');
 };

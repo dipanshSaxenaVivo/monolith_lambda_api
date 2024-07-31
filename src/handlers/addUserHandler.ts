@@ -1,12 +1,12 @@
 import { APIGatewayProxyResult, Context } from "aws-lambda";
-import { applyMiddleware, validationMiddleware } from "middleware";
+import { apply_middleware, validation_middleware } from "middleware";
 import { Role } from "models/enums";
 import { ResponseCodeEnum } from "models/enums";
 import { IDependencyContainer } from "models/interface";
-import { APIHttpProxyEvent } from "models/types";
+import { APIHttpProxyEvent, handlerType } from "models/types";
 import { addUserSchema } from "schema";
 import { addUserModel } from "schema/addUserSchema";
-import { handlerErrorReturn } from "utility";
+import { createStandardError } from "utility";
 
 /**
  * Handles API requests to add a new user.
@@ -18,7 +18,7 @@ import { handlerErrorReturn } from "utility";
  * @param {Context} context The AWS Lambda context object.
  * @returns {Promise<APIGatewayProxyResult>} A Promise resolving to an API Gateway Proxy Result object.
  */
-const rawAddUserHandler = async (
+const raw_add_user_handler = async (
   DC: IDependencyContainer,
   event: APIHttpProxyEvent,
   context: Context
@@ -29,7 +29,7 @@ const rawAddUserHandler = async (
       data: {
         email: body.email,
         name: body.name,
-        phoneNumber: body.phoneNumber && body.phoneNumber,
+        phoneNumber: body.phoneNumber,
         role: body.role,
       },
     });
@@ -42,12 +42,17 @@ const rawAddUserHandler = async (
     return {
       statusCode: 500,
       body: JSON.stringify(
-        handlerErrorReturn(ResponseCodeEnum.INTERNAL_SERVER_ERROR)
+        createStandardError(ResponseCodeEnum.INTERNAL_SERVER_ERROR)
       ),
     };
   }
 };
 
-export const addUserHandler = applyMiddleware(rawAddUserHandler, [
-  validationMiddleware(addUserSchema),
+/**
+ * Combines the handler with the necessary middlewares.
+ * 
+ * @type {handlerType}
+ */
+export const add_user_handler:handlerType = apply_middleware(raw_add_user_handler, [
+  validation_middleware(addUserSchema),
 ]);

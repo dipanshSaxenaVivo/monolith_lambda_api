@@ -1,4 +1,4 @@
-import { addUserHandler, deleteUserHandler, updateUserHandler, decryptHandler, encryptHandler  } from "handlers";
+import { add_user_handler, delete_user_handler, update_user_handler, decrypt_handler, encrypt_handler  } from "handlers";
 import { RouteEnums } from "models/enums";
 
 /**
@@ -11,11 +11,11 @@ import { RouteEnums } from "models/enums";
  * facilitating the handling of all api operations.
  */
 const route_container = Object.freeze({
-  [RouteEnums["/test/user/add"]]: addUserHandler,
-  [RouteEnums["/test/user/delete"]]: deleteUserHandler,
-  [RouteEnums["/test/user/update"]]: updateUserHandler,
-  [RouteEnums["/test/decrypt"]]: decryptHandler,
-  [RouteEnums["/test/encrypt"]]: encryptHandler,
+  [RouteEnums["/test/user/add"]]: add_user_handler,
+  [RouteEnums["/test/user/delete"]]: delete_user_handler,
+  [RouteEnums["/test/user/update"]]: update_user_handler,
+  [RouteEnums["/test/decrypt"]]: decrypt_handler,
+  [RouteEnums["/test/encrypt"]]: encrypt_handler,
 })
 
 export default route_container

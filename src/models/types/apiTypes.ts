@@ -20,4 +20,4 @@ export type handlerType = (
   context: Context
 ) => Promise<APIGatewayProxyResult>;
 
-export type middlewareType = (...args: any[]) => handlerType;
+export type middlewareType = (handler:handlerType) => handlerType;

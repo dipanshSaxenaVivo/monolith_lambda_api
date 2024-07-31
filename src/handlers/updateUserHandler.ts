@@ -1,12 +1,12 @@
 import * as Prisma from "@prisma/client";
 import { APIGatewayEvent, APIGatewayProxyResult, Context } from "aws-lambda";
-import { applyMiddleware, validationMiddleware } from "middleware";
+import { apply_middleware, validation_middleware } from "middleware";
 import { ResponseCodeEnum } from "models/enums";
 import { IDependencyContainer } from "models/interface";
 import { APIHttpProxyEvent } from "models/types";
 import { updateUserSchema } from "schema";
 import { updateUserModel } from "schema/updateUserSchema";
-import { handlerErrorReturn, hasRequiredFields } from "utility";
+import { createStandardError, hasRequiredFields } from "utility";
 
 /**
  * Handles API requests to update a user.
@@ -17,7 +17,7 @@ import { handlerErrorReturn, hasRequiredFields } from "utility";
  * @param {Context} context The AWS Lambda context object.
  * @returns {Promise<APIGatewayProxyResult>} A Promise resolving to an API Gateway Proxy Result object.
  */
-const rawUpdateUserHandler = async (
+const raw_update_user_handler = async (
   DC: IDependencyContainer,
   event: APIHttpProxyEvent,
   context: Context
@@ -44,12 +44,17 @@ const rawUpdateUserHandler = async (
     return {
       statusCode: 500,
       body: JSON.stringify(
-        handlerErrorReturn(ResponseCodeEnum.INTERNAL_SERVER_ERROR)
+        createStandardError(ResponseCodeEnum.INTERNAL_SERVER_ERROR)
       ),
     };
   }
 };
 
-export const updateUserHandler = applyMiddleware(rawUpdateUserHandler, [
-  validationMiddleware(updateUserSchema),
+/**
+ * Combines the handler with the necessary middlewares.
+ * 
+ * @type {handlerType}
+ */
+export const update_user_handler = apply_middleware(raw_update_user_handler, [
+  validation_middleware(updateUserSchema),
 ]);

@@ -1,12 +1,12 @@
 import * as Prisma from "@prisma/client";
 import { APIGatewayEvent, APIGatewayProxyResult, Context } from "aws-lambda";
-import { applyMiddleware, validationMiddleware } from "middleware";
+import { apply_middleware, validation_middleware } from "middleware";
 import { ResponseCodeEnum } from "models/enums";
 import { IDependencyContainer } from "models/interface";
 import { APIHttpProxyEvent } from "models/types";
 import { idValidateSchema } from "schema";
 import { idValidateModel } from "schema/idValidateSchema";
-import { handlerErrorReturn, hasRequiredFields } from "utility";
+import { createStandardError, hasRequiredFields } from "utility";
 
 /**
  * Handles API requests to delete a user.
@@ -17,7 +17,7 @@ import { handlerErrorReturn, hasRequiredFields } from "utility";
  * @param {Context} context The AWS Lambda context object.
  * @returns {Promise<APIGatewayProxyResult>} A Promise resolving to an API Gateway Proxy Result object.
  */
-const rawDeleteUserHandler = async (
+const raw_delete_user_handler = async (
   DC: IDependencyContainer,
   event: APIHttpProxyEvent,
   context: Context
@@ -41,11 +41,16 @@ const rawDeleteUserHandler = async (
     DC.logger.error(error)
     return {
       statusCode: 500,
-      body: JSON.stringify(handlerErrorReturn(ResponseCodeEnum.INTERNAL_SERVER_ERROR)),
+      body: JSON.stringify(createStandardError(ResponseCodeEnum.INTERNAL_SERVER_ERROR)),
     };
   }
 };
 
-export const deleteUserHandler = applyMiddleware(rawDeleteUserHandler, [
-  validationMiddleware(idValidateSchema)
+/**
+ * Combines the handler with the necessary middlewares.
+ * 
+ * @type {handlerType}
+ */
+export const delete_user_handler = apply_middleware(raw_delete_user_handler, [
+  validation_middleware(idValidateSchema)
 ])

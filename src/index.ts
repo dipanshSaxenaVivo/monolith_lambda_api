@@ -3,7 +3,7 @@ import { apply_kms, apply_console_logger, apply_prisma } from "dependencies";
 import { RouteEnums, ResponseCodeEnum } from "models/enums";
 import { APIHttpProxyEvent } from "models/types";
 import { route_container } from "routes";
-import { handlerErrorReturn } from "utility";
+import { createStandardError } from "utility";
 
 /**
  * Initializes and provides dependencies for route handlers.
@@ -23,7 +23,7 @@ let injector = apply_kms(apply_console_logger({} as any));
  */
 let decrypted_env_string =
   await injector.Cryptography.get_encrypted_environment_variable(
-    "MONGO_DB_URI"
+    "MONGO_DB_URI_ENC"
   );
 if (decrypted_env_string) {
   injector = apply_prisma(injector, decrypted_env_string);
@@ -44,24 +44,34 @@ export const handler = async (
   context: Context
 ): Promise<APIGatewayProxyResult> => {
   injector.logger.log(
-    "event object %O,\n context object %O",
-    event.requestContext.authorizer.lambda,
+    "event object %s,\n context object %O",
+    JSON.stringify(event),
     context
   );
+
+  // Check if the route exists in the route container
   if (!(event.rawPath in route_container)) {
     return {
       statusCode: 404,
-      body: JSON.stringify(handlerErrorReturn(ResponseCodeEnum.RESOURCE_NOT_FOUND)),
+      body: JSON.stringify(
+        createStandardError(ResponseCodeEnum.RESOURCE_NOT_FOUND)
+      ),
     };
   }
   try {
-    const result = await route_container[event.rawPath as RouteEnums](injector, event, context);
+    // Get the route handler for the given path
+    const route_handler = route_container[event.rawPath as RouteEnums];
+
+    // Execute the route handler and return its result
+    const result = await route_handler(injector, event, context);
     return result;
   } catch (error) {
     injector.logger.error("Error handling request:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify(handlerErrorReturn(ResponseCodeEnum.INTERNAL_SERVER_ERROR)),
+      body: JSON.stringify(
+        createStandardError(ResponseCodeEnum.INTERNAL_SERVER_ERROR)
+      ),
     };
   }
 };

@@ -2,7 +2,7 @@ import { APIGatewayProxyResult, Context } from "aws-lambda";
 import { ResponseCodeEnum } from "models/enums";
 import { IDependencyContainer } from "models/interface";
 import { APIHttpProxyEvent } from "models/types";
-import { handlerErrorReturn } from "utility";
+import { createStandardError } from "utility";
 
 /**
  * Handles encryption requests using the ICryptography service in IDependencyContainer.
@@ -15,7 +15,7 @@ import { handlerErrorReturn } from "utility";
  * @param {Context} context - AWS Lambda context.
  * @returns {Promise<APIGatewayProxyResult>} - Response object with encrypted data or an error message.
  */
-export const encryptHandler = async (
+export const encrypt_handler = async (
   DC: IDependencyContainer,
   event: APIHttpProxyEvent,
   context: Context
@@ -25,7 +25,7 @@ export const encryptHandler = async (
   if (!body) {
     return {
       statusCode: 400,
-      body: JSON.stringify(handlerErrorReturn(ResponseCodeEnum.INVALID_BODY)),
+      body: JSON.stringify(createStandardError(ResponseCodeEnum.INVALID_BODY)),
     };
   }
   try {
@@ -40,7 +40,7 @@ export const encryptHandler = async (
     DC.logger.error(error)
     return {
       statusCode: 500,
-      body: JSON.stringify(handlerErrorReturn(ResponseCodeEnum.INTERNAL_SERVER_ERROR)),
+      body: JSON.stringify(createStandardError(ResponseCodeEnum.INTERNAL_SERVER_ERROR)),
     };
   }
 };
