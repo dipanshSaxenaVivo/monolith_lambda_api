@@ -1,3 +1,4 @@
+import { ResponseCodeEnum } from "models/enums";
 
 export type IValidationResponse<T> = successValidationResponse<T> | failureValidationResponse;
 
@@ -12,7 +13,7 @@ export interface failureValidationResponse {
 }
 
 export interface IError {
-  responseCode: number;
+  responseCode: ResponseCodeEnum;
   message: string;
   extra?: string[];
 }

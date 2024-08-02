@@ -6,6 +6,7 @@ import {
   encryptHandler,
 } from "handlers";
 import { RouteEnums } from "models/enums";
+import { HandlerType } from "models/types";
 
 /**
  * @module ROUTE_CONTAINER
@@ -31,7 +32,7 @@ import { RouteEnums } from "models/enums";
 //   [RouteEnums["/test/encrypt"]]: encryptHandler,
 // });
 
-const ROUTE_CONTAINER: Record<string, Function> = {
+const ROUTE_CONTAINER: Record<string, HandlerType<any>> = {
   "/test/user/add": addUserHandler,
   "/test/user/delete": deleteUserHandler,
   "/test/user/update": updateUserHandler,

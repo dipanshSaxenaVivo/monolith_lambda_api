@@ -44,5 +44,5 @@ export const getAllValuesFromEnum = <T extends Record<number, string>>(enumObjec
  * @returns T
  */
 export const parseEventBody = <T>(stringifiedBody:string|undefined)=>{
-  return JSON.parse(stringifiedBody ?? "") as T
+  return JSON.parse(stringifiedBody ?? "{}") as T
 }

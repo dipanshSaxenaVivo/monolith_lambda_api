@@ -1,3 +1,3 @@
-import { responseErrorMap } from './apiErrorResponseMessages'
+import { responseErrorMessage } from './apiErrorResponseMessages'
 
-export { responseErrorMap }
+export { responseErrorMessage }

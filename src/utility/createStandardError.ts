@@ -1,6 +1,6 @@
-import { IErrorResponse } from "models/apiResponses";
+import { IError } from "models/apiResponses";
 import { ResponseCodeEnum } from "models/enums";
-import { responseErrorMap } from "resources";
+import { responseErrorMessage } from "resources";
 
 /**
  * Creates a standard error object with the specified response code, message, and optional extra data.
@@ -13,8 +13,8 @@ import { responseErrorMap } from "resources";
 export const createStandardError = (
   responseCode: ResponseCodeEnum,
   extra?: string[]
-): IErrorResponse => ({
-  message: responseErrorMap[responseCode],
+): IError => ({
+  message: responseErrorMessage[responseCode],
   responseCode: responseCode,
   extra,
 });
