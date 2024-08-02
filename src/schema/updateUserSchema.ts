@@ -21,4 +21,4 @@ export const updateUserSchema = idValidateSchema.concat(
   })
 );
 
-export type updateUserModel = yup.InferType<typeof updateUserSchema>;
+export type UpdateUserModel = yup.InferType<typeof updateUserSchema>;

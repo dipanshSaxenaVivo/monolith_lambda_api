@@ -9,18 +9,18 @@ console.log("prisma utility");
  * function to connect to db.
  *
  * @param {Omit<IDependencyContainer, 'db_client'>} DC
- * @param {String} decrypted_env_string
+ * @param {String} decryptedEnvString
  * @returns {IDependencyContainer}
  */
-export const apply_prisma = (
+export const applyPrisma = (
   DC: Omit<IDependencyContainer, "db_client">,
-  decrypted_env_string: string
+  decryptedEnvString: string
 ): IDependencyContainer => {
   /**
    * instantiates prisma client with the decrypted mongodb connection string
    */
   let prisma = new Prisma.PrismaClient({
-    datasourceUrl: decrypted_env_string,
+    datasourceUrl: decryptedEnvString,
   });
 
   console.log("prisma client instantiated");

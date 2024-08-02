@@ -1,5 +1,5 @@
-import { apply_console_logger } from './consoleLogUtility'
-import { apply_kms } from './kmsUtility'
-import { apply_prisma } from './prismaClientUtility'
+import { applyConsoleLogger } from './consoleLogUtility'
+import { applyKms } from './kmsUtility'
+import { applyPrisma } from './prismaClientUtility'
 
-export { apply_kms, apply_console_logger, apply_prisma }
+export { applyKms, applyConsoleLogger, applyPrisma }

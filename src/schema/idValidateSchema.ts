@@ -6,4 +6,4 @@ export const idValidateSchema = yup.object({
     .string().required(ResponseCodeEnum.ID_IS_REQUIRED.toString()),
 });
 
-export type idValidateModel = yup.InferType<typeof idValidateSchema>;
+export type IdValidateModel = yup.InferType<typeof idValidateSchema>;

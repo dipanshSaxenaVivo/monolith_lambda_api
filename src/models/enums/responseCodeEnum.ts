@@ -12,4 +12,5 @@ export enum ResponseCodeEnum {
   USER_NAME_MAX_15 = 11,
   INVALID_BODY = 12,
   ID_IS_REQUIRED = 13,
+  USER_ALREADY_EXIST = 14
 }

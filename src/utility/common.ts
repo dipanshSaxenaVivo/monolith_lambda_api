@@ -10,7 +10,7 @@
  * const hasFields = hasRequiredFields(event.body, 'email', 'name');
  * returns true if event.body has both 'email' and 'name' fields
  */
-export function hasRequiredFields(obj: object, ...fields: (string | string[])[]): boolean {
+export function hasRequiredFields<T extends object,K extends keyof T>(obj: T, ...fields: K[]): boolean {
   const flatFields = fields.flat();
   return flatFields.every(field => obj.hasOwnProperty(field));
 }
@@ -36,3 +36,13 @@ export const getAllKeysFromEnum = <T extends Record<number, string>>(enumObject:
 export const getAllValuesFromEnum = <T extends Record<number, string>>(enumObject: T): string[] => {
   return Object.values(enumObject).filter(value => typeof value === 'string');
 };
+
+/**
+ * this is a generic function which parses the event body and returns the object with
+ * generic type T
+ * @param stringifiedBody 
+ * @returns T
+ */
+export const parseEventBody = <T>(stringifiedBody:string|undefined)=>{
+  return JSON.parse(stringifiedBody ?? "") as T
+}

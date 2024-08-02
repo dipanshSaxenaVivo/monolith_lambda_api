@@ -1,3 +1,3 @@
-import { APIHttpProxyEvent, handlerType, middlewareType } from './apiTypes'
+import { APIHttpProxyEvent, HandlerType, APIResponse } from './apiTypes'
 
-export type { APIHttpProxyEvent, handlerType, middlewareType }
+export type { APIHttpProxyEvent, HandlerType, APIResponse }

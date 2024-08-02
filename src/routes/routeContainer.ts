@@ -1,21 +1,42 @@
-import { add_user_handler, delete_user_handler, update_user_handler, decrypt_handler, encrypt_handler  } from "handlers";
+import {
+  addUserHandler,
+  deleteUserHandler,
+  updateUserHandler,
+  decryptHandler,
+  encryptHandler,
+} from "handlers";
 import { RouteEnums } from "models/enums";
 
 /**
- * @module route_container
+ * @module ROUTE_CONTAINER
  * @description
- * Provides a centralized and immutable mapping 
+ * Provides a centralized and immutable mapping
  * between API routes and their corresponding handler functions.
  * This structure ensures clear, maintainable, and efficient routing within the application.
  * Each handler function is associated with a specific route defined in `routeEnums`,
  * facilitating the handling of all api operations.
  */
-const route_container = Object.freeze({
-  [RouteEnums["/test/user/add"]]: add_user_handler,
-  [RouteEnums["/test/user/delete"]]: delete_user_handler,
-  [RouteEnums["/test/user/update"]]: update_user_handler,
-  [RouteEnums["/test/decrypt"]]: decrypt_handler,
-  [RouteEnums["/test/encrypt"]]: encrypt_handler,
-})
+// const ROUTE_CONTAINER = Object.freeze({
+//   "/test/user/add": addUserHandler,
+//   "/test/user/delete": deleteUserHandler,
+//   "/test/user/update": updateUserHandler,
+//   "/test/decrypt": decryptHandler,
+//   "/test/encrypt": encryptHandler,
+// });
+// const ROUTE_CONTAINER = Object.freeze({
+//   [RouteEnums["/test/user/add"]]: addUserHandler,
+//   [RouteEnums["/test/user/delete"]]: deleteUserHandler,
+//   [RouteEnums["/test/user/update"]]: updateUserHandler,
+//   [RouteEnums["/test/decrypt"]]: decryptHandler,
+//   [RouteEnums["/test/encrypt"]]: encryptHandler,
+// });
 
-export default route_container
+const ROUTE_CONTAINER: Record<string, Function> = {
+  "/test/user/add": addUserHandler,
+  "/test/user/delete": deleteUserHandler,
+  "/test/user/update": updateUserHandler,
+  "/test/decrypt": decryptHandler,
+  "/test/encrypt": encryptHandler
+}
+
+export default ROUTE_CONTAINER;

@@ -1,11 +1,11 @@
 import {
   APIGatewayEventRequestContextLambdaAuthorizer,
-  APIGatewayEventRequestContextV2,
   APIGatewayEventRequestContextV2WithAuthorizer,
   APIGatewayProxyEventV2WithRequestContext,
   APIGatewayProxyResult,
   Context,
 } from "aws-lambda";
+import { IError } from "models/apiResponses";
 import { IDependencyContainer } from "models/interface";
 
 export type APIHttpProxyEvent = APIGatewayProxyEventV2WithRequestContext<
@@ -14,10 +14,12 @@ export type APIHttpProxyEvent = APIGatewayProxyEventV2WithRequestContext<
   >
 >;
 
-export type handlerType = (
+export type APIResponse<T> = Omit<APIGatewayProxyResult,'body'> & {
+  body: T | IError;
+};
+
+export type HandlerType<T> = (
   DC: IDependencyContainer,
   event: APIHttpProxyEvent,
   context: Context
-) => Promise<APIGatewayProxyResult>;
-
-export type middlewareType = (handler:handlerType) => handlerType;
+) => Promise<APIResponse<T>>;

@@ -31,5 +31,5 @@ export interface ICryptography {
  * 
  * @throws {Error} If the environment variable is not found.
  */
-  get_encrypted_environment_variable: (ENV_NAME: string) => Promise<string | undefined>
+  getEnvironmentVariable: (ENV_NAME: string) => Promise<string | undefined>
 }

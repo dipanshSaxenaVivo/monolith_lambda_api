@@ -17,7 +17,7 @@ const warn = (...args: any[]) => {
   console.warn(...args);
 };
 
-const console_logger: ILogger = {
+const consoleLogger: ILogger = {
   log,
   error,
   info,
@@ -29,8 +29,8 @@ const console_logger: ILogger = {
  * @param {Omit<IDependencyContainer, "logger">} DC
  * @returns {IDependencyContainer}
  */
-export const apply_console_logger = (
+export const applyConsoleLogger = (
   DC: Omit<IDependencyContainer, "logger">
 ): IDependencyContainer => {
-  return { ...DC, logger: console_logger };
+  return { ...DC, logger: consoleLogger };
 };

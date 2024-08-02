@@ -25,4 +25,4 @@ export const addUserSchema = yup.object({
     .required(ResponseCodeEnum.USER_ROLE_REQUIRED.toString()),
 });
 
-export type addUserModel = yup.InferType<typeof addUserSchema>;
+export type AddUserModel = yup.InferType<typeof addUserSchema>;

@@ -84,7 +84,7 @@ let encrypt = async (
  *
  * @throws {Error} If the environment variable is not found.
  */
-const get_encrypted_environment_variable = (
+const getEnvironmentVariable = (
   ENV_NAME: string
 ): Promise<string | undefined> => {
   let encryptedBase64Text = process.env[ENV_NAME];
@@ -98,7 +98,7 @@ const get_encrypted_environment_variable = (
 const KMS: ICryptography = {
   decrypt,
   encrypt,
-  get_encrypted_environment_variable,
+  getEnvironmentVariable,
 };
 
 /**
@@ -107,9 +107,9 @@ const KMS: ICryptography = {
  * @param {Omit<IDependencyContainer, 'KMS'>} DC
  * @returns {IDependencyContainer}
  */
-export const apply_kms = (
+export const applyKms = (
   DC: Omit<IDependencyContainer, "KMS">
 ): IDependencyContainer => {
   console.log("apply kms called");
-  return { ...DC, Cryptography: KMS };
+  return { ...DC, cryptography: KMS };
 };

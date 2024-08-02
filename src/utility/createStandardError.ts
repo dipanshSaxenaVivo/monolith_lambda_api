@@ -1,3 +1,4 @@
+import { IErrorResponse } from "models/apiResponses";
 import { ResponseCodeEnum } from "models/enums";
 import { responseErrorMap } from "resources";
 
@@ -11,8 +12,8 @@ import { responseErrorMap } from "resources";
  */
 export const createStandardError = (
   responseCode: ResponseCodeEnum,
-  extra?: any
-): { message: string; responseCode: ResponseCodeEnum; extra: any } => ({
+  extra?: string[]
+): IErrorResponse => ({
   message: responseErrorMap[responseCode],
   responseCode: responseCode,
   extra,

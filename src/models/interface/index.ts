@@ -1,4 +1,4 @@
-import { IDependencyContainer } from './dependencies'
+import { IDependencyContainer } from './iDependencyContainer'
 import { ICryptography } from './iCryptography'
 import { ILogger } from './iLogger'
 import { IDatabaseClient } from './iDatabaseClient'

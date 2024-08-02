@@ -1,11 +1,10 @@
 import * as Prisma from "@prisma/client";
 import { APIGatewayEvent, APIGatewayProxyResult, Context } from "aws-lambda";
-import { apply_middleware, validation_middleware } from "middleware";
 import { ResponseCodeEnum } from "models/enums";
 import { IDependencyContainer } from "models/interface";
-import { APIHttpProxyEvent } from "models/types";
+import { APIHttpProxyEvent, APIResponse } from "models/types";
 import { idValidateSchema } from "schema";
-import { idValidateModel } from "schema/idValidateSchema";
+import { IdValidateModel } from "schema/idValidateSchema";
 import { createStandardError, hasRequiredFields } from "utility";
 
 /**
@@ -17,12 +16,12 @@ import { createStandardError, hasRequiredFields } from "utility";
  * @param {Context} context The AWS Lambda context object.
  * @returns {Promise<APIGatewayProxyResult>} A Promise resolving to an API Gateway Proxy Result object.
  */
-const raw_delete_user_handler = async (
+export const deleteUserHandler = async (
   DC: IDependencyContainer,
   event: APIHttpProxyEvent,
   context: Context
-): Promise<APIGatewayProxyResult> => {
-  let body = event.body as unknown as idValidateModel;
+): Promise<APIResponse<{}>> => {
+  let body = event.body as unknown as IdValidateModel;
   try {
     const result = await DC.db_client.users.delete({
       where: {
@@ -32,25 +31,15 @@ const raw_delete_user_handler = async (
 
     return {
       statusCode: 200,
-      body: JSON.stringify({
+      body: {
         message: `deleted user successfully`,
-        user: result,
-      }),
+      },
     };
   } catch (error) {
-    DC.logger.error(error)
+    DC.logger.error(error);
     return {
       statusCode: 500,
-      body: JSON.stringify(createStandardError(ResponseCodeEnum.INTERNAL_SERVER_ERROR)),
+      body: createStandardError(ResponseCodeEnum.INTERNAL_SERVER_ERROR),
     };
   }
 };
-
-/**
- * Combines the handler with the necessary middlewares.
- * 
- * @type {handlerType}
- */
-export const delete_user_handler = apply_middleware(raw_delete_user_handler, [
-  validation_middleware(idValidateSchema)
-])

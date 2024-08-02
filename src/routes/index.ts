@@ -1,3 +1,3 @@
-import route_container from './routeContainer'
+import ROUTE_CONTAINER from './routeContainer'
 
-export { route_container }
+export { ROUTE_CONTAINER }
