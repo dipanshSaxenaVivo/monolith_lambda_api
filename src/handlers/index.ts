@@ -1,4 +1,4 @@
-import { addUserHandler } from './addUserHandler/addUserHandler'
+import { addUserHandler } from './addUserHandler'
 import { updateUserHandler } from './updateUserHandler'
 import { deleteUserHandler } from './deleteUserHandler'
 import { decryptHandler } from './decryptHandler'

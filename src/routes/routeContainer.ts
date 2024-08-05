@@ -6,7 +6,8 @@ import {
   encryptHandler,
 } from "handlers";
 import { RouteEnums } from "models/enums";
-import { HandlerType } from "models/types";
+import { APIResponse, HandlerType } from "models/types";
+import { attachHandler } from "utility";
 
 /**
  * @module ROUTE_CONTAINER
@@ -32,12 +33,14 @@ import { HandlerType } from "models/types";
 //   [RouteEnums["/test/encrypt"]]: encryptHandler,
 // });
 
-const ROUTE_CONTAINER: Record<string, HandlerType<any>> = {
-  "/test/user/add": addUserHandler,
-  "/test/user/delete": deleteUserHandler,
-  "/test/user/update": updateUserHandler,
-  "/test/decrypt": decryptHandler,
-  "/test/encrypt": encryptHandler
+
+
+const ROUTE_CONTAINER: Record<string, HandlerType> = {
+  "/test/user/add": attachHandler(addUserHandler),
+  "/test/user/delete": attachHandler(deleteUserHandler),
+  "/test/user/update": attachHandler(updateUserHandler),
+  "/test/decrypt": attachHandler(decryptHandler),
+  "/test/encrypt": attachHandler(encryptHandler)
 }
 
 export default ROUTE_CONTAINER;

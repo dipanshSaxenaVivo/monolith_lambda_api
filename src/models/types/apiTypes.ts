@@ -18,8 +18,8 @@ export type APIResponse<T> = Omit<APIGatewayProxyResult,'body'> & {
   body: T | IError;
 };
 
-export type HandlerType<T> = (
+export type HandlerType = (
   DC: IDependencyContainer,
   event: APIHttpProxyEvent,
   context: Context
-) => Promise<APIResponse<T>>;
+) => Promise<APIGatewayProxyResult>;

@@ -4,9 +4,9 @@ import { IDecryptHandlerResponse } from "./iDecryptHandlerResponse";
 import { IEncryptHandlerResponse } from "./iEncryptHandlerResponse";
 import {
   IError,
-  IValidationResponse,
-  failureValidationResponse,
-  successValidationResponse,
+  IResponse,
+  failureResponse,
+  successResponse,
   CreateFailure,
   CreateSuccess,
 } from "./foundation";
@@ -14,9 +14,9 @@ import {
 export type {
   IAddUserHandlerResponse,
   IError,
-  IValidationResponse,
-  failureValidationResponse,
-  successValidationResponse,
+  IResponse,
+  failureResponse,
+  successResponse,
   IUpdateUserHandlerResponse,
   IDecryptHandlerResponse,
   IEncryptHandlerResponse,

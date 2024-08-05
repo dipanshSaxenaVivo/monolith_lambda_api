@@ -1,9 +1,11 @@
+import { Prisma } from "@prisma/client";
 import { Context, APIGatewayProxyResult } from "aws-lambda";
 import { applyKms, applyConsoleLogger, applyPrisma } from "dependencies";
-import { RouteEnums, ResponseCodeEnum } from "models/enums";
+import { RouteEnums, ResponseCodeEnum, HttpStatusCode } from "models/enums";
 import { APIHttpProxyEvent } from "models/types";
 import { ROUTE_CONTAINER } from "routes";
-import { createStandardError } from "utility";
+import { createStandardError } from "utility";import { ValidationError } from "yup";
+;
 
 /**
  * Initializes and provides dependencies for route handlers.
@@ -53,29 +55,55 @@ export const handler = async (
   if (!(event.rawPath in ROUTE_CONTAINER)) {
     return {
       statusCode: 404,
-      body: JSON.stringify(
-        createStandardError(ResponseCodeEnum.RESOURCE_NOT_FOUND)
-      ),
+      body: JSON.stringify(createStandardError(ResponseCodeEnum.RESOURCE_NOT_FOUND)),
     };
   }
   try {
     // Get the route handler for the given path
     const routeHandler = ROUTE_CONTAINER[event.rawPath];
-    // const routeHandler = ROUTE_CONTAINER[event.rawPath];
 
     // Execute the route handler and return its result
     const result = await routeHandler(injector, event, context);
-    return {
-      ...result,
-      body: JSON.stringify(result.body),
-    };
+
+    return result;
   } catch (error) {
-    injector.logger.error("Error handling request:", error);
+    injector.logger.log(error,JSON.stringify(error));
+
+    // handles prisma client knows errors
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        return {
+          statusCode: HttpStatusCode.CONFLICT_409,
+          body: JSON.stringify(createStandardError(error.code as any)),
+        };
+      }
+
+      return {
+        statusCode: HttpStatusCode.BAD_REQUEST_400,
+        body: JSON.stringify(createStandardError(error.code as any)),
+      };
+    }
+
+    // handles prisma validation errors
+    if (error instanceof Prisma.PrismaClientValidationError) {
+      return {
+        statusCode: HttpStatusCode.BAD_REQUEST_400,
+        body: JSON.stringify(createStandardError(ResponseCodeEnum.INVALID_BODY)),
+      };
+    }
+
+    // handles yup validation errors
+    if(error instanceof ValidationError){
+      return {
+        statusCode:HttpStatusCode.BAD_REQUEST_400,
+        body:JSON.stringify(createStandardError(parseInt(error.message),error.errors))
+      }
+    }
+
+    // base error for internal server error 500
     return {
-      statusCode: 500,
-      body: JSON.stringify(
-        createStandardError(ResponseCodeEnum.INTERNAL_SERVER_ERROR)
-      ),
+      statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR_500,
+      body: JSON.stringify(createStandardError(ResponseCodeEnum.INTERNAL_SERVER_ERROR)),
     };
   }
 };

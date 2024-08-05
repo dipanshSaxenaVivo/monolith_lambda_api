@@ -1,5 +1,6 @@
 import * as Prisma from "@prisma/client";
 import { IDependencyContainer } from "models/interface";
+import { AnySchema, ValidationError } from "yup";
 console.log("prisma utility");
 
 /**
@@ -13,7 +14,7 @@ console.log("prisma utility");
  * @returns {IDependencyContainer}
  */
 export const applyPrisma = (
-  DC: Omit<IDependencyContainer, "db_client">,
+  DC: IDependencyContainer,
   decryptedEnvString: string
 ): IDependencyContainer => {
   /**
@@ -21,6 +22,7 @@ export const applyPrisma = (
    */
   let prisma = new Prisma.PrismaClient({
     datasourceUrl: decryptedEnvString,
+    errorFormat:"colorless",
   });
 
   console.log("prisma client instantiated");

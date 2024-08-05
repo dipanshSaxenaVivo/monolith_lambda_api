@@ -26,11 +26,11 @@ const consoleLogger: ILogger = {
 
 /**
  * apply console log dependency to the provided dependency container
- * @param {Omit<IDependencyContainer, "logger">} DC
+ * @param {IDependencyContainer} DC
  * @returns {IDependencyContainer}
  */
 export const applyConsoleLogger = (
-  DC: Omit<IDependencyContainer, "logger">
+  DC: IDependencyContainer
 ): IDependencyContainer => {
   return { ...DC, logger: consoleLogger };
 };

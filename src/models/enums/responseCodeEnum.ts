@@ -13,6 +13,7 @@ export enum ResponseCodeEnum {
   INVALID_BODY = 12,
   ID_IS_REQUIRED = 13,
   USER_ALREADY_EXIST = 14,
+  USER_ID_NOT_EXIST = 15,
   
   // Prisma Client (Query Engine)
   InvalidDatabaseString = "P1013",

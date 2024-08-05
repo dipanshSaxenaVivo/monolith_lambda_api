@@ -104,11 +104,11 @@ const KMS: ICryptography = {
 /**
  * applies KMS dependency to the given dependency container
  *
- * @param {Omit<IDependencyContainer, 'KMS'>} DC
+ * @param {IDependencyContainer} DC
  * @returns {IDependencyContainer}
  */
 export const applyKms = (
-  DC: Omit<IDependencyContainer, "KMS">
+  DC: IDependencyContainer
 ): IDependencyContainer => {
   console.log("apply kms called");
   return { ...DC, cryptography: KMS };

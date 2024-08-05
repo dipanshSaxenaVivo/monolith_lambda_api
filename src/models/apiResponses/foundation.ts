@@ -1,13 +1,13 @@
 import { ResponseCodeEnum } from "models/enums";
 
-export type IValidationResponse<T> = successValidationResponse<T> | failureValidationResponse;
+export type IResponse<T> = successResponse<T> | failureResponse;
 
-export interface successValidationResponse<T> {
+export interface successResponse<T> {
   success: true;
   data: T;
 }
 
-export interface failureValidationResponse {
+export interface failureResponse {
   success: false;
   data: IError;
 }
@@ -18,5 +18,5 @@ export interface IError {
   extra?: string[];
 }
 
-export const CreateSuccess = <T>(data:T):successValidationResponse<T> => ({success: true, data: data})
-export const CreateFailure = (data:IError):failureValidationResponse => ({success: false, data: data})
+export const CreateSuccess = <T>(data:T):successResponse<T> => ({success: true, data: data})
+export const CreateFailure = (data:IError):failureResponse => ({success: false, data: data})
