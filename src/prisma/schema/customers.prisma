@@ -1,0 +1,24 @@
+enum currency {
+  INR
+  USD
+}
+
+enum companyType {
+  DEMO
+  PERMENANT
+  SUPENDED
+}
+
+model customers {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  email        String      @default("meEmail@gmail.com")
+  customerName String      @default("meEmail")
+  phoneNumber  Int         @default(1234567)
+  description  String?
+  endDate      DateTime    @default(now()) @db.Timestamp
+  currency     currency    @default(INR)
+  companyType  companyType @default(DEMO)
+
+  @@unique(name:"myUnique",[email, phoneNumber])
+  @@index(name:"myIndex",[phoneNumber])
+}
