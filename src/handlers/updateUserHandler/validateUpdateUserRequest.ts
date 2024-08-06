@@ -4,7 +4,7 @@ import {
   CreateSuccess,
   IResponse,
   IUpdateUserHandlerRequest,
-} from "models/HandlerSpecificTypes";
+} from "models/businessContracts";
 import { ResponseCodeEnum } from "models/enums";
 import { IDatabaseClient } from "models/interface";
 import { createStandardError, hasRequiredFields } from "utility";
@@ -16,11 +16,11 @@ import { createStandardError, hasRequiredFields } from "utility";
  * in the database. If the validation fails, it returns a failure response; otherwise,
  * it returns a success response with the validated user data.
  *
- * @param {IUpdateUserHandlerRequest} user - The request object containing the details 
+ * @param {IUpdateUserHandlerRequest} user - The request object containing the details
  * of the user to be updated.
- * @param {IDatabaseClient} Prisma - The database client used to interact 
+ * @param {IDatabaseClient} Prisma - The database client used to interact
  * with the user data in the database.
- * @returns {Promise<IResponse<IUpdateUserHandlerRequest>>} A promise that resolves to an 
+ * @returns {Promise<IResponse<IUpdateUserHandlerRequest>>} A promise that resolves to an
  * IResponse object containing
  * either the validated user data or an error if validation fails.
  */
@@ -41,7 +41,9 @@ export const validateUpdateUserRequest = async (
   });
 
   if (!Boolean(doesUserExist)) {
-    throw new NotFoundException(ResponseCodeEnum.USER_ID_NOT_EXIST);
+    return CreateFailure(
+      createStandardError(ResponseCodeEnum.USER_ID_NOT_EXIST)
+    );
   }
 
   return CreateSuccess(user);

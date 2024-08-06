@@ -5,7 +5,7 @@ import {
   CreateSuccess,
   IDeleteUserHandlerRequest,
   IResponse,
-} from "models/HandlerSpecificTypes";
+} from "models/businessContracts";
 import { ResponseCodeEnum } from "models/enums";
 import { IDatabaseClient } from "models/interface";
 import { createStandardError, hasRequiredFields } from "utility";
@@ -42,7 +42,9 @@ export const validateDeleteUserRequest = async (
   });
 
   if (!Boolean(doesUserExist)) {
-    throw new NotFoundException(ResponseCodeEnum.USER_ID_NOT_EXIST);
+    return CreateFailure(
+      createStandardError(ResponseCodeEnum.USER_ID_NOT_EXIST)
+    )
   }
 
   return CreateSuccess(userID);

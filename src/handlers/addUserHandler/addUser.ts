@@ -1,4 +1,4 @@
-import { IAddUserHandlerRequest } from "models/HandlerSpecificTypes";
+import { IAddUserHandlerRequest } from "models/businessContracts";
 import { IDatabaseClient } from "models/interface";
 
 /**

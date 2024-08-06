@@ -1,7 +1,7 @@
 import { APIGatewayProxyResult, Context } from "aws-lambda";
 import { IDependencyContainer } from "models/interface";
-import { APIHttpProxyEvent, HandlerType } from "models/types";
-import { IResponse } from "models/HandlerSpecificTypes";
+import { APIHttpProxyEvent, LambdaHandlerType } from "models/types";
+import { IResponse } from "models/businessContracts";
 import { HttpStatusCode } from "models/enums";
 
 /**
@@ -11,11 +11,11 @@ import { HttpStatusCode } from "models/enums";
  * It parses the event body, invokes the provided handler, and formats the response
  * according to the result.
  *
- * @param {Function} someNormalHandler - The handler function to be wrapped and invoked.
- * @returns {Function} An AWS Lambda handler function that processes the event and context.
+ * @param {Function} businessHandler - The handler function to be wrapped and invoked.
+ * @returns {LambdaHandlerType} An AWS Lambda handler function that processes the event and context.
  */
 export const attachHandler =
-  (someNormalHandler: (...args: any[]) => Promise<IResponse<any>>) =>
+  (businessHandler: (...args: any[]) => Promise<IResponse<any>>): LambdaHandlerType =>
     async (
       DC: IDependencyContainer,
       event: APIHttpProxyEvent,
@@ -24,7 +24,7 @@ export const attachHandler =
 
       let parsedBody = JSON.parse(event.body ?? "{}")
 
-      let result = await someNormalHandler(DC, parsedBody);
+      let result = await businessHandler(DC, parsedBody);
 
       if (!result.success) {
         return {

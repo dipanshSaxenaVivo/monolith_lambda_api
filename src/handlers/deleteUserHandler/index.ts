@@ -7,7 +7,7 @@ import {
   IDeleteUserHandlerRequest,
   IDeleteUserHandlerResponse,
   IResponse,
-} from "models/HandlerSpecificTypes";
+} from "models/businessContracts";
 
 /**
  * Handles the process of deleting a user.

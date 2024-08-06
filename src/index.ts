@@ -69,33 +69,33 @@ export const handler = async (
   } catch (error) {
     injector.logger.log(error,JSON.stringify(error));
 
-    // handles prisma client knows errors
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      return {
-        statusCode: HttpStatusCode.BAD_REQUEST_400,
-        body: JSON.stringify(createStandardError(error.code as any)),
-      };
-    }
-
-    // handles prisma validation errors
-    if (error instanceof Prisma.PrismaClientValidationError) {
-      return {
-        statusCode: HttpStatusCode.BAD_REQUEST_400,
-        body: JSON.stringify(createStandardError(ResponseCodeEnum.INVALID_BODY)),
-      };
-    }
-
-    if(error instanceof HttpException){
-      return {
-        statusCode: error.getStatus(),
-        body: JSON.stringify(error.getResponse() ?? "{}")
-      }
-    }
-
     // base error for internal server error 500
     return {
       statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR_500,
       body: JSON.stringify(createStandardError(ResponseCodeEnum.INTERNAL_SERVER_ERROR)),
     };
+
+    // // handles prisma client knows errors
+    // if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    //   return {
+    //     statusCode: HttpStatusCode.BAD_REQUEST_400,
+    //     body: JSON.stringify(createStandardError(error.code as any)),
+    //   };
+    // }
+
+    // // handles prisma validation errors
+    // if (error instanceof Prisma.PrismaClientValidationError) {
+    //   return {
+    //     statusCode: HttpStatusCode.BAD_REQUEST_400,
+    //     body: JSON.stringify(createStandardError(ResponseCodeEnum.INVALID_BODY)),
+    //   };
+    // }
+
+    // if(error instanceof HttpException){
+    //   return {
+    //     statusCode: error.getStatus(),
+    //     body: JSON.stringify(error.getResponse() ?? "{}")
+    //   }
+    // }
   }
 };

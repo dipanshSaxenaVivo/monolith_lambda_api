@@ -4,7 +4,7 @@ import {
   IResponse,
   IUpdateUserHandlerRequest,
   IUpdateUserHandlerResponse,
-} from "models/HandlerSpecificTypes";
+} from "models/businessContracts";
 import { IDependencyContainer } from "models/interface";
 import { validateUpdateUserRequest } from "./validateUpdateUserRequest";
 import { updateUser } from "./updateUser";

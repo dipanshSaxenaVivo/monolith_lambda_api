@@ -3,7 +3,7 @@ import {
   deleteUserHandler,
   updateUserHandler,
 } from "handlers";
-import { HandlerType } from "models/types";
+import { LambdaHandlerType } from "models/types";
 import { attachHandler } from "utility";
 
 /**
@@ -14,10 +14,10 @@ import { attachHandler } from "utility";
  * the provided handler to ensure it processes API Gateway events correctly
  * within the AWS Lambda context.
  *
- * @type {Record<string, HandlerType>}
+ * @type {Record<string, LambdaHandlerType>}
  * @constant
  */
-const ROUTE_CONTAINER: Record<string, HandlerType> = {
+const ROUTE_CONTAINER: Record<string, LambdaHandlerType> = {
   "/test/user/add": attachHandler(addUserHandler),
   "/test/user/delete": attachHandler(deleteUserHandler),
   "/test/user/update": attachHandler(updateUserHandler)

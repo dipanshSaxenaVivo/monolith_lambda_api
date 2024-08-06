@@ -4,7 +4,7 @@ import {
   CreateSuccess,
   IAddUserHandlerRequest,
   IResponse,
-} from "models/HandlerSpecificTypes";
+} from "models/businessContracts";
 import { ResponseCodeEnum } from "models/enums";
 import { IDatabaseClient } from "models/interface";
 import { createStandardError, hasRequiredFields } from "utility";
@@ -44,7 +44,9 @@ export const validateAddUserRequest = async (
   let doesUserExist = userCount > 0;
 
   if (doesUserExist) {
-    throw new ConflictException(ResponseCodeEnum.USER_ALREADY_EXIST);
+    return CreateFailure(
+      createStandardError(ResponseCodeEnum.USER_ALREADY_EXIST)
+    )
   }
 
   return CreateSuccess(user);

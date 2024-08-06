@@ -13,7 +13,7 @@ export type APIHttpProxyEvent = APIGatewayProxyEventV2WithRequestContext<
   >
 >;
 
-export type HandlerType = (
+export type LambdaHandlerType = (
   DC: IDependencyContainer,
   event: APIHttpProxyEvent,
   context: Context

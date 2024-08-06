@@ -4,7 +4,7 @@ import {
   IAddUserHandlerRequest,
   IAddUserHandlerResponse,
   IResponse,
-} from "models/HandlerSpecificTypes";
+} from "models/businessContracts";
 import { IDependencyContainer } from "models/interface";
 import { validateAddUserRequest } from "./validateAddUserRequest";
 import { addUser } from "./addUser";

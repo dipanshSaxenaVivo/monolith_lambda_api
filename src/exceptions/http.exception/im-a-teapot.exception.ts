@@ -1,6 +1,6 @@
 import { HttpStatusCode, ResponseCodeEnum } from 'models/enums';
 import { HttpException } from './index';
-import { IError } from 'models/HandlerSpecificTypes';
+import { IError } from 'models/businessContracts';
 import { createStandardError } from 'utility';
 
 /**

@@ -1,4 +1,4 @@
-import { IError } from 'models/HandlerSpecificTypes';
+import { IError } from 'models/businessContracts';
 
 /**
  * Base class for HTTP exceptions.

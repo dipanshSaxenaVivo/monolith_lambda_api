@@ -1,3 +1,3 @@
-import { APIHttpProxyEvent, HandlerType } from './apiTypes'
+import { APIHttpProxyEvent, LambdaHandlerType } from './apiTypes'
 
-export type { APIHttpProxyEvent, HandlerType }
+export type { APIHttpProxyEvent, LambdaHandlerType }

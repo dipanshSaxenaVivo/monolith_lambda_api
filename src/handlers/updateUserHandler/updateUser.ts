@@ -1,4 +1,4 @@
-import { IUpdateUserHandlerRequest } from "models/HandlerSpecificTypes";
+import { IUpdateUserHandlerRequest } from "models/businessContracts";
 import { IDatabaseClient } from "models/interface";
 
 /**
