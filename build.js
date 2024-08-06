@@ -15,7 +15,7 @@ build({
   platform: "node",
   // assetNames: 'dist/output/[name].[ext]',
   // resolveExtensions:['.ts','.json'],
-  external: ["@aws-sdk/client-kms", "prisma", "@prisma/client", "aws-lambda","yup"], // This ensures aws-sdk is treated as an external dependency
+  external: ["@aws-sdk/client-ssm","@aws-sdk/client-kms", "prisma", "@prisma/client", "aws-lambda","yup"], // This ensures aws-sdk is treated as an external dependency
   outExtension: {
     ".js": ".mjs",
   },

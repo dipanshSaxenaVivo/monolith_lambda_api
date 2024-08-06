@@ -1,6 +1,7 @@
 import { ICryptography } from "./iCryptography";
 import { IDatabaseClient } from "./iDatabaseClient";
 import { ILogger } from "./iLogger";
+import { IParameterStore } from "./iParameterStore";
 
 /**
  * Interface for the dependency container providing core services such as
@@ -15,4 +16,5 @@ export interface IDependencyContainer {
   logger: ILogger;
   cryptography: ICryptography;
   db_client: IDatabaseClient;
+  store: IParameterStore
 }
