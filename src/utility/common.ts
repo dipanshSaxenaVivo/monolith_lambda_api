@@ -20,7 +20,7 @@ export function hasRequiredFields<T extends object, K extends keyof T>(
 ): string[] {
   const flatFields = fields.flat();
   return flatFields.reduce((acc: any[], current) => {
-    if (obj.hasOwnProperty(current)) {
+    if (current in obj) {
       return acc;
     } else {
       acc.push(current);
