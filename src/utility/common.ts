@@ -1,21 +1,25 @@
 /**
  * Checks if an object contains the specified fields.
  * 
+ * This function verifies whether all specified fields are present in the object.
+ * 
  * @param {object} obj - The object to be checked.
- * @param {...string | string[]} fields - The fields to check for. 
- * Can be a single string, multiple strings, or an array of strings.
- * @returns {boolean} - Returns true if all specified fields are present, otherwise false.
+ * @param {...string} fields - The fields to check for. Can be a single string, multiple strings, or an array of strings.
+ * @returns {string[]} - An array of missing field names. Returns an empty array if all specified fields are present.
  * 
  * @example
- * const hasFields = hasRequiredFields(event.body, 'email', 'name');
- * returns true if event.body has both 'email' and 'name' fields
+ * const missingFields = hasRequiredFields(event.body, 'email', 'name');
+ * // returns [] if event.body has both 'email' and 'name' fields
+ * 
+ * const missingFields = hasRequiredFields(event.body, 'email', 'age');
+ * // returns ['age'] if 'age' is not present in event.body
  */
 export function hasRequiredFields<T extends object, K extends keyof T>(
   obj: T,
   ...fields: K[]
 ): string[] {
   const flatFields = fields.flat();
-  return flatFields.reduce((acc: any[], current, index) => {
+  return flatFields.reduce((acc: any[], current) => {
     if (obj.hasOwnProperty(current)) {
       return acc;
     } else {
@@ -24,6 +28,7 @@ export function hasRequiredFields<T extends object, K extends keyof T>(
     }
   }, []);
 }
+
 
 /**
  * Extracts the numeric values from an enum object.
@@ -46,13 +51,3 @@ export const getAllKeysFromEnum = <T extends Record<number, string>>(enumObject:
 export const getAllValuesFromEnum = <T extends Record<number, string>>(enumObject: T): string[] => {
   return Object.values(enumObject).filter(value => typeof value === 'string');
 };
-
-/**
- * this is a generic function which parses the event body and returns the object with
- * generic type T
- * @param stringifiedBody 
- * @returns T
- */
-export const parseEventBody = (stringifiedBody:string|undefined)=>{
-  return JSON.parse(stringifiedBody ?? "{}")
-}

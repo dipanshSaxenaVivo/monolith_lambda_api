@@ -7,13 +7,15 @@ import { HandlerType } from "models/types";
 import { attachHandler } from "utility";
 
 /**
- * @module ROUTE_CONTAINER
- * @description
- * Provides a centralized and immutable mapping
- * between API routes and their corresponding handler functions.
- * This structure ensures clear, maintainable, and efficient routing within the application.
- * Each handler function is associated with a specific route defined in `routeEnums`,
- * facilitating the handling of all api operations.
+ * A record of API routes mapped to their corresponding handlers.
+ *
+ * This container maps specific API routes to their respective handlers
+ * using the `attachHandler` function. The `attachHandler` function wraps
+ * the provided handler to ensure it processes API Gateway events correctly
+ * within the AWS Lambda context.
+ *
+ * @type {Record<string, HandlerType>}
+ * @constant
  */
 const ROUTE_CONTAINER: Record<string, HandlerType> = {
   "/test/user/add": attachHandler(addUserHandler),

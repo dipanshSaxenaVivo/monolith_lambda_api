@@ -9,8 +9,6 @@ import { createStandardError } from 'utility';
  * Any attempt to brew coffee with a teapot should result in the error code
  * "418 I'm a teapot". The resulting entity body MAY be short and stout.
  *
- * @see [Built-in HTTP exceptions](https://docs.nestjs.com/exception-filters#built-in-http-exceptions)
- *
  * @publicApi
  */
 export class ImATeapotException extends HttpException {
@@ -18,25 +16,15 @@ export class ImATeapotException extends HttpException {
    * Instantiate an `ImATeapotException` Exception.
    *
    * @example
-   * `throw new ImATeapotException()`
+   * `throw new ImATeapotException(ResponseCodeEnum.SOME_ERROR_CODE)`
    *
    * @usageNotes
    * The HTTP response status code will be 418.
-   * - The `objectOrError` argument defines the JSON response body or the message string.
-   * - The `descriptionOrOptions` argument contains either a short description of the HTTP error or an options object used to provide an underlying error cause.
+   * 
+   * The response will contain a standard error object created based on the provided response code.
    *
-   * By default, the JSON response body contains two properties:
-   * - `statusCode`: this will be the value 418.
-   * - `message`: the string `"I'm a Teapot"` by default; override this by supplying
-   * a string in the `objectOrError` parameter.
-   *
-   * If the parameter `objectOrError` is a string, the response body will contain an
-   * additional property, `error`, with a short description of the HTTP error. To override the
-   * entire JSON response body, pass an object instead. Nest will serialize the object
-   * and return it as the JSON response body.
-   *
-   * @param objectOrError string or object describing the error condition.
-   * @param descriptionOrOptions either a short description of the HTTP error or an options object used to provide an underlying error cause
+   * @param {ResponseCodeEnum} responseCode - Enum value representing the error code.
+   * @param {string[]} [extra] - Optional additional error details.
    */
   constructor(
     responseCode: ResponseCodeEnum, 

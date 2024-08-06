@@ -7,7 +7,7 @@ import { responseErrorMessage } from "resources";
 
  * @param {ResponseCodeEnum} responseCode - The error response code.
  * @param {any} extra - Optional extra data to include in the error object.
- * @returns {{ message: string; responseCode: ResponseCodeEnum; extra: any }} 
+ * @returns {IError} 
  *  The created error object.
  */
 export const createStandardError = (

@@ -2,11 +2,10 @@ import { Prisma } from "@prisma/client";
 import { Context, APIGatewayProxyResult } from "aws-lambda";
 import { applyKms, applyConsoleLogger, applyPrisma } from "dependencies";
 import { HttpException } from "exceptions/http.exception";
-import { RouteEnums, ResponseCodeEnum, HttpStatusCode } from "models/enums";
+import { ResponseCodeEnum, HttpStatusCode } from "models/enums";
 import { APIHttpProxyEvent } from "models/types";
 import { ROUTE_CONTAINER } from "routes";
 import { createStandardError } from "utility";
-;
 
 /**
  * Initializes and provides dependencies for route handlers.

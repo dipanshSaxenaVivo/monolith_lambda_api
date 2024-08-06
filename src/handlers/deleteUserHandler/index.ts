@@ -10,12 +10,18 @@ import {
 } from "models/HandlerSpecificTypes";
 
 /**
- * Handles API requests to delete a user.
- * Expects a POST request containing a JSON body with the 'id' field.
+ * Handles the process of deleting a user.
  *
- * @param {IDependencyContainer} DC The dependency container providing access to the database client.
- * @param {IDeleteUserHandlerRequest} userID user's Object id.
- * @returns {Promise<APIResponse<IDeleteUserHandlerResponse>>} A Promise resolving to an empty object.
+ * This function validates the delete request,
+ * deletes the user from the database if the request is valid,
+ * and returns a success or failure response.
+ *
+ * @param {IDependencyContainer} DC - The dependency container providing access to
+ * necessary services like the database client.
+ * @param {IDeleteUserHandlerRequest} userID - The request object containing the
+ * identifier of the user to be deleted.
+ * @returns {Promise<IResponse<IDeleteUserHandlerResponse>>} A promise that resolves to an
+ * IResponse object containing either an empty response on success or an error on failure.
  */
 export const deleteUserHandler = async (
   DC: IDependencyContainer,

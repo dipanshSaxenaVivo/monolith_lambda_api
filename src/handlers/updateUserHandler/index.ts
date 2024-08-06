@@ -8,15 +8,19 @@ import {
 import { IDependencyContainer } from "models/interface";
 import { validateUpdateUserRequest } from "./validateUpdateUserRequest";
 import { updateUser } from "./updateUser";
-import { BadRequestException } from "exceptions/http.exception/bad-request.exception";
 
 /**
- * Handles API requests to update a user.
- * Expects a POST request containing a JSON body with the 'id' field, and optional email and name fields.
+ * Handles the process of updating a user's information.
  *
- * @param {IDependencyContainer} DC The dependency container providing access to the database client.
- * @param {users} userData User's information.
- * @returns {Promise<APIGatewayProxyResult>} A Promise resolving to an API Gateway Proxy Result object.
+ * This function validates the update request, 
+ * updates the user details in the database, 
+ * and returns a success or failure response.
+ *
+ * @param {IDependencyContainer} DC - The dependency container providing access to 
+ * necessary services like the database client.
+ * @param {IUpdateUserHandlerRequest} userData - The request object containing the updated user details.
+ * @returns {Promise<IResponse<IUpdateUserHandlerResponse>>} A promise that resolves to an 
+ * IResponse object containing either the updated user details or an error.
  */
 export const updateUserHandler = async (
   DC: IDependencyContainer,
