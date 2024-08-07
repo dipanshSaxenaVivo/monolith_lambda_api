@@ -84,14 +84,14 @@ let encrypt = async (
  *
  * @throws {Error} If the environment variable is not found.
  */
-const getEnvironmentVariable = (
+const getEnvironmentVariable = async (
   ENV_NAME: string
 ): Promise<string | undefined> => {
   let encryptedBase64Text = process.env[ENV_NAME];
   if (!encryptedBase64Text) {
     throw new Error(`Environment Variable ${ENV_NAME} not found.`);
   } else {
-    return decrypt(encryptedBase64Text);
+    return await decrypt(encryptedBase64Text);
   }
 };
 

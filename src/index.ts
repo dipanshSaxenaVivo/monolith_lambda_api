@@ -1,7 +1,5 @@
-import { Prisma } from "@prisma/client";
 import { Context, APIGatewayProxyResult } from "aws-lambda";
-import { applyKms, applyConsoleLogger, applyPrisma } from "dependencies";
-import { HttpException } from "exceptions/http.exception";
+import { applyKms, applyConsoleLogger, applyPrisma, applyEnvironmentVariables } from "dependencies";
 import { ResponseCodeEnum, HttpStatusCode } from "models/enums";
 import { APIHttpProxyEvent } from "models/types";
 import { ROUTE_CONTAINER } from "routes";
@@ -10,14 +8,14 @@ import { createStandardError } from "utility";
 /**
  * Initializes and provides dependencies for route handlers.
  *
- * The `injector` object is created by applying KMS and
+ * The `injector` object is created by applying KMS, Environment variables and
  * console logger dependencies.
  *
  * This ensures that all route handlers have access to
  * required services (e.g., logging and KMS).
  *
  */
-let injector = applyKms(applyConsoleLogger({} as any));
+let injector = applyKms(applyConsoleLogger(await applyEnvironmentVariables({} as any)));
 
 /**
  * we store our connection string in environment variable of lambda and we encrypt it via a kms key,

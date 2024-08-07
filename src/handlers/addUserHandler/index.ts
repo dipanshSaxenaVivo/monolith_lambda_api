@@ -27,6 +27,9 @@ export const addUserHandler = async (
   DC: IDependencyContainer,
   userToAdd: IAddUserHandlerRequest
 ): Promise<IResponse<IAddUserHandlerResponse>> => {
+  
+  DC.logger.log('value:',DC.environmentVariables.AWS_IOTCORE_POLICY_NAME,DC.environmentVariables.API_GATEWAY_REQUEST_RESOURCE_ARNS)
+  
   let validationResult = await validateAddUserRequest(userToAdd, DC.db_client);
 
   if (!validationResult.success) {

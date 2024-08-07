@@ -2,6 +2,6 @@ import { IDependencyContainer } from './iDependencyContainer'
 import { ICryptography } from './iCryptography'
 import { ILogger } from './iLogger'
 import { IDatabaseClient } from './iDatabaseClient'
-import { IParameterStore } from './iParameterStore'
+import { IEnvironmentVariables } from './iEnvironmentVariables'
 
-export type { IDependencyContainer, ICryptography, ILogger, IDatabaseClient, IParameterStore }
+export type { IDependencyContainer, ICryptography, ILogger, IDatabaseClient, IEnvironmentVariables }

@@ -18,9 +18,9 @@ import { attachHandler } from "utility";
  * @constant
  */
 const ROUTE_CONTAINER: Record<string, LambdaHandlerType> = {
-  "/test/user/add": attachHandler(addUserHandler),
-  "/test/user/delete": attachHandler(deleteUserHandler),
-  "/test/user/update": attachHandler(updateUserHandler)
+  "/user/add": attachHandler(addUserHandler),
+  "/user/delete": attachHandler(deleteUserHandler),
+  "/user/update": attachHandler(updateUserHandler)
 }
 
 export default ROUTE_CONTAINER;

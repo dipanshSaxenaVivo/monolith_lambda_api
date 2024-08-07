@@ -21,8 +21,8 @@ set -e
 # }
 
 # # hardcoded variables
-S3_BUCKET_NAME="testingdi-lambda-code"
-LAMBDA_FUNCTION_NAME="testingDI"
+S3_BUCKET_NAME="testingdi-code"
+LAMBDA_FUNCTION_NAME="testingdi"
 
 
 
@@ -56,7 +56,7 @@ cp "${SOURCE_DIR}/package.json" "${DIST_DIR}"
 cd "${DIST_DIR}"
 
 echo "Installing production dependencies..."
-npm install --production
+npm install --omit=dev
 
 echo "Generating Prisma client..."
 npx prisma generate
