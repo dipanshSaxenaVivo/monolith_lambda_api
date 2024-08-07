@@ -13,17 +13,16 @@ const client = new SSMClient();
  * @param {Parameter[]} parameters - The parameters to parse.
  * @returns {object} The parsed parameters as a key-value object.
  */
-let parseParameters = (parameters: Parameter[]): {
+let parseParameters = (
+  parameters: Parameter[]
+): {
   [k in string]: any;
 } =>
   parameters.reduce(
-    (
-      acc: {},
-      curr
-    ) => ({
-        ...acc,
-        ...JSON.parse(curr.Value ?? "{}"),
-      }),
+    (acc: {}, curr) => ({
+      ...acc,
+      ...JSON.parse(curr.Value ?? "{}"),
+    }),
     {}
   );
 
@@ -57,7 +56,7 @@ export const getAllVariables = async () => {
 export const applyEnvironmentVariables = async (
   DC: IDependencyContainer
 ): Promise<IDependencyContainer> => {
-  let variables = await getAllVariables() ?? {}
+  let variables = (await getAllVariables()) ?? {};
   return {
     ...DC,
     environmentVariables: variables,
