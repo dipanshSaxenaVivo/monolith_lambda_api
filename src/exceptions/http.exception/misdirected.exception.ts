@@ -1,6 +1,6 @@
 import { HttpStatusCode, ResponseCodeEnum } from 'models/enums';
 import { HttpException } from './index';
-import { IError } from 'models/businessContracts';
+import { IError } from 'models/interface';
 import { createStandardError } from 'utility';
 /**
  * Defines an HTTP exception for *Misdirected* type errors.

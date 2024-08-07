@@ -1,10 +1,12 @@
 import {
-  CreateFailure,
-  CreateSuccess,
-  IResponse,
   IUpdateUserHandlerRequest,
   IUpdateUserHandlerResponse,
 } from "models/businessContracts";
+import {
+  CreateFailure,
+  CreateSuccess,
+  IResponse,
+} from "models/interface";
 import { IDependencyContainer } from "models/interface";
 import { validateUpdateUserRequest } from "./validateUpdateUserRequest";
 import { updateUser } from "./updateUser";

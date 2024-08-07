@@ -1,7 +1,7 @@
 import { APIGatewayProxyResult, Context } from "aws-lambda";
 import { IDependencyContainer } from "models/interface";
 import { APIHttpProxyEvent, LambdaHandlerType } from "models/types";
-import { IResponse } from "models/businessContracts";
+import { IResponse } from "models/interface";
 import { HttpStatusCode } from "models/enums";
 
 /**

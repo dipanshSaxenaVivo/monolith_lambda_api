@@ -1,10 +1,9 @@
-import { NotFoundException } from "exceptions/http.exception/not-found.exception";
+import { IUpdateUserHandlerRequest } from "models/businessContracts";
 import {
   CreateFailure,
   CreateSuccess,
   IResponse,
-  IUpdateUserHandlerRequest,
-} from "models/businessContracts";
+} from "models/interface";
 import { ResponseCodeEnum } from "models/enums";
 import { IDatabaseClient } from "models/interface";
 import { createStandardError, hasRequiredFields } from "utility";

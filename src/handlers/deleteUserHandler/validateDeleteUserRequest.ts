@@ -1,11 +1,13 @@
 import { BadRequestException } from "exceptions/http.exception/bad-request.exception";
 import { NotFoundException } from "exceptions/http.exception/not-found.exception";
 import {
+  IDeleteUserHandlerRequest,
+} from "models/businessContracts";
+import {
   CreateFailure,
   CreateSuccess,
-  IDeleteUserHandlerRequest,
   IResponse,
-} from "models/businessContracts";
+} from "models/interface";
 import { ResponseCodeEnum } from "models/enums";
 import { IDatabaseClient } from "models/interface";
 import { createStandardError, hasRequiredFields } from "utility";

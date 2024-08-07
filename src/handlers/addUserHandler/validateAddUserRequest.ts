@@ -1,10 +1,12 @@
 import { ConflictException } from "exceptions/http.exception/conflict.exception";
 import {
+  IAddUserHandlerRequest,
+} from "models/businessContracts";
+import {
   CreateFailure,
   CreateSuccess,
-  IAddUserHandlerRequest,
   IResponse,
-} from "models/businessContracts";
+} from "models/interface";
 import { ResponseCodeEnum } from "models/enums";
 import { IDatabaseClient } from "models/interface";
 import { createStandardError, hasRequiredFields } from "utility";

@@ -2,12 +2,14 @@ import { IDependencyContainer } from "models/interface";
 import { validateDeleteUserRequest } from "./validateDeleteUserRequest";
 import { deleteUser } from "./deleteHandler";
 import {
-  CreateFailure,
-  CreateSuccess,
   IDeleteUserHandlerRequest,
   IDeleteUserHandlerResponse,
-  IResponse,
 } from "models/businessContracts";
+import {
+  CreateFailure,
+  CreateSuccess,
+  IResponse,
+} from "models/interface";
 
 /**
  * Handles the process of deleting a user.

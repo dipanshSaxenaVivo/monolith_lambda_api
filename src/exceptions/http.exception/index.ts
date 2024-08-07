@@ -1,4 +1,4 @@
-import { IError } from 'models/businessContracts';
+import { IError } from 'models/interface';
 
 /**
  * Base class for HTTP exceptions.

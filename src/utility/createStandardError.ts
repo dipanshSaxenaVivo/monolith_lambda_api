@@ -1,4 +1,4 @@
-import { IError } from "models/businessContracts";
+import { IError } from "models/interface";
 import { ResponseCodeEnum } from "models/enums";
 import { responseErrorMessage } from "resources";
 
