@@ -53,24 +53,27 @@ export const handler = async (
   if (!(event.rawPath in ROUTE_CONTAINER)) {
     return {
       statusCode: HttpStatusCode.NOT_FOUND_404,
-      body: JSON.stringify(createStandardError(ResponseCodeEnum.RESOURCE_NOT_FOUND)),
+      body: JSON.stringify({
+        message: 'Requested resource not found.'
+      }),
     };
   }
+  // Get the route handler for the given path
+  const routeHandler = ROUTE_CONTAINER[event.rawPath];
   try {
-    // Get the route handler for the given path
-    const routeHandler = ROUTE_CONTAINER[event.rawPath];
-
     // Execute the route handler and return its result
     const result = await routeHandler(injector, event, context);
 
     return result;
   } catch (error) {
-    injector.logger.log(error,JSON.stringify(error));
+    injector.logger.log(error, JSON.stringify(error));
 
     // base error for internal server error 500
     return {
       statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR_500,
-      body: JSON.stringify(createStandardError(ResponseCodeEnum.INTERNAL_SERVER_ERROR)),
+      body: JSON.stringify({
+        message: 'internal server error.'
+      }),
     };
   }
 };

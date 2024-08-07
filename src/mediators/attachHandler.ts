@@ -3,6 +3,7 @@ import { IDependencyContainer } from "models/interface";
 import { APIHttpProxyEvent, LambdaHandlerType } from "models/types";
 import { IResponse } from "models/interface";
 import { HttpStatusCode } from "models/enums";
+import { handleParseEvent } from "./handleParseEvent";
 
 /**
  * Attaches a handler to process API Gateway events.
@@ -15,15 +16,18 @@ import { HttpStatusCode } from "models/enums";
  * @returns {LambdaHandlerType} An AWS Lambda handler function that processes the event and context.
  */
 export const attachHandler =
-  (businessHandler: (...args: any[]) => Promise<IResponse<any>>): LambdaHandlerType =>
-    async (
-      DC: IDependencyContainer,
-      event: APIHttpProxyEvent,
-      context: Context
-    ): Promise<APIGatewayProxyResult> => {
+  (
+    businessHandler: (...args: any[]) => Promise<IResponse<any>>
+  ): LambdaHandlerType =>
+  async (
+    DC: IDependencyContainer,
+    event: APIHttpProxyEvent,
+    context: Context
+  ): Promise<APIGatewayProxyResult> => {
+    let parsedBody = handleParseEvent(event, DC.logger);
 
-      let parsedBody = JSON.parse(event.body ?? "{}")
-
+    try {
+      // return as it is
       let result = await businessHandler(DC, parsedBody);
 
       if (!result.success) {
@@ -37,4 +41,12 @@ export const attachHandler =
         statusCode: HttpStatusCode.OK_200,
         body: JSON.stringify(result.data),
       };
-    };
+    } catch (error) {
+      return {
+        statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR_500,
+        body: JSON.stringify({
+          message: "internal server error.",
+        }),
+      };
+    }
+  };
