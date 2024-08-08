@@ -1,9 +1,8 @@
 import { Context, APIGatewayProxyResult } from "aws-lambda";
 import { applyKms, applyConsoleLogger, applyPrisma, applyEnvironmentVariables } from "dependencies";
-import { ResponseCodeEnum, HttpStatusCode } from "models/enums";
+import { HttpStatusCode } from "models/enums";
 import { APIHttpProxyEvent } from "models/types";
 import { ROUTE_CONTAINER } from "routes";
-import { createStandardError } from "utility";
 
 /**
  * Initializes and provides dependencies for route handlers.

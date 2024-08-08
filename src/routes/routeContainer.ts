@@ -2,15 +2,15 @@ import {
   addUserHandler,
   deleteUserHandler,
   updateUserHandler,
-} from "handlers";
+} from "businessHandlers";
 import { LambdaHandlerType } from "models/types";
-import { attachHandler } from "utility";
+import { attachToHandler } from "mediators";
 
 /**
  * A record of API routes mapped to their corresponding handlers.
  *
  * This container maps specific API routes to their respective handlers
- * using the `attachHandler` function. The `attachHandler` function wraps
+ * using the `attachToHandler` function. The `attachToHandler` function wraps
  * the provided handler to ensure it processes API Gateway events correctly
  * within the AWS Lambda context.
  *
@@ -18,9 +18,9 @@ import { attachHandler } from "utility";
  * @constant
  */
 const ROUTE_CONTAINER: Record<string, LambdaHandlerType> = {
-  "/user/add": attachHandler(addUserHandler),
-  "/user/delete": attachHandler(deleteUserHandler),
-  "/user/update": attachHandler(updateUserHandler)
+  "/user/add": attachToHandler(addUserHandler),
+  "/user/delete": attachToHandler(deleteUserHandler),
+  "/user/update": attachToHandler(updateUserHandler)
 }
 
 export default ROUTE_CONTAINER;
