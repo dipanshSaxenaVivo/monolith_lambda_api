@@ -18,52 +18,50 @@ export const attachToHandler =
   (
     businessHandler: (...args: any[]) => Promise<IResponse<any>>
   ): LambdaHandlerType =>
-    async (
-      DC: IDependencyContainer,
-      event: APIHttpProxyEvent,
-      context: Context
-    ): Promise<APIGatewayProxyResult> => {
-      let parsedBody
+  async (
+    DC: IDependencyContainer,
+    event: APIHttpProxyEvent,
+    context: Context
+  ): Promise<APIGatewayProxyResult> => {
+    let parsedBody;
 
-      try {
-        if (!event.body) {
-          throw new Error();
-        }
-        parsedBody = JSON.parse(event.body);
-      } catch (error) {
-        DC.logger.log(error)
+    // parses body for business handler, 400 exception if failed
+    try {
+      parsedBody = JSON.parse(event.body!);
+    } catch (error) {
+      DC.logger.log(error);
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          message: "Invalid request.",
+        }),
+      };
+    }
+
+    try {
+      let result = await businessHandler(DC, parsedBody);
+
+      // failure of business handler
+      if (!result.success) {
         return {
-          statusCode: 400,
-          body: JSON.stringify({
-            message: "Invalid request.",
-          }),
-        };
-      }
-
-      try {
-        let result = await businessHandler(DC, parsedBody);
-
-        // failure of business handler
-        if (!result.success) {
-          return {
-            statusCode: HttpStatusCode.BAD_REQUEST_400,
-            body: JSON.stringify(result.data),
-          };
-        }
-
-        // success of business handler
-        return {
-          statusCode: HttpStatusCode.OK_200,
+          statusCode: HttpStatusCode.BAD_REQUEST_400,
           body: JSON.stringify(result.data),
         };
-      } catch (error) {
-        DC.logger.log(error)
-        // exception in business handler
-        return {
-          statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR_500,
-          body: JSON.stringify({
-            message: "internal server error.",
-          }),
-        };
       }
-    };
+
+      // success of business handler
+      return {
+        statusCode: HttpStatusCode.OK_200,
+        body: JSON.stringify(result.data),
+      };
+    } catch (error) {
+      DC.logger.log(error);
+      // exception in business handler
+      return {
+        statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR_500,
+        body: JSON.stringify({
+          message: "internal server error.",
+        }),
+      };
+    }
+  };

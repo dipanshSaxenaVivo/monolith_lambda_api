@@ -1,5 +1,10 @@
 import { Context, APIGatewayProxyResult } from "aws-lambda";
-import { applyKms, applyConsoleLogger, applyPrisma, applyEnvironmentVariables } from "dependencies";
+import {
+  applyKms,
+  applyConsoleLogger,
+  applyPrisma,
+  applyEnvironmentVariables,
+} from "dependencies";
 import { HttpStatusCode } from "models/enums";
 import { APIHttpProxyEvent } from "models/types";
 import { ROUTE_CONTAINER } from "routes";
@@ -14,16 +19,17 @@ import { ROUTE_CONTAINER } from "routes";
  * required services (e.g., logging and KMS).
  *
  */
-let injector = applyKms(applyConsoleLogger(await applyEnvironmentVariables({} as any)));
+let injector = applyKms(
+  applyConsoleLogger(await applyEnvironmentVariables({} as any))
+);
 
 /**
  * we store our connection string in environment variable of lambda and we encrypt it via a kms key,
  * so, we would have to decrypt our connection string before using it.
  */
-let decryptedEnvString =
-  await injector.cryptography.getEnvironmentVariable(
-    "MONGO_DB_URI_ENC"
-  );
+let decryptedEnvString = await injector.cryptography.getEnvironmentVariable(
+  "MONGO_DB_URI_ENC"
+);
 if (decryptedEnvString) {
   injector = applyPrisma(injector, decryptedEnvString);
 }
@@ -48,21 +54,12 @@ export const handler = async (
     context
   );
 
-  // Check if the route exists in the route container
-  if (!(event.rawPath in ROUTE_CONTAINER)) {
-    return {
-      statusCode: HttpStatusCode.NOT_FOUND_404,
-      body: JSON.stringify({
-        message: 'Requested resource not found.'
-      }),
-    };
-  }
   // Get the route handler for the given path
   const routeHandler = ROUTE_CONTAINER[event.rawPath];
+
   try {
     // Execute the route handler and return its result
     const result = await routeHandler(injector, event, context);
-
     return result;
   } catch (error) {
     injector.logger.log(error, JSON.stringify(error));
@@ -71,7 +68,7 @@ export const handler = async (
     return {
       statusCode: HttpStatusCode.INTERNAL_SERVER_ERROR_500,
       body: JSON.stringify({
-        message: 'internal server error.'
+        message: "internal server error.",
       }),
     };
   }
