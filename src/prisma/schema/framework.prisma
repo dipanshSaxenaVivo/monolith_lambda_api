@@ -1,0 +1,9 @@
+model framework {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  description     String
+  regulatory_body String
+  url             String
+
+  @@index([name])
+}

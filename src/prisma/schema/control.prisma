@@ -1,0 +1,15 @@
+model control {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String?
+  code        String
+  description String
+  domain      String // Departments: IT, HR and Operations etc.
+  is_custom   Boolean
+  customer_id String  @db.ObjectId // customer::_id when is_custom is true.
+
+  @@index([name])
+  @@index([description])
+  @@index([customer_id])
+
+  @@unique([code])
+}

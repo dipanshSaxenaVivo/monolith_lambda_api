@@ -1,0 +1,10 @@
+model criteria {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  framework_id String @db.ObjectId // framework::_id. can not change once created.
+  code         String
+  description  String
+
+  @@index([framework_id])
+
+  @@unique([code,framework_id])
+}

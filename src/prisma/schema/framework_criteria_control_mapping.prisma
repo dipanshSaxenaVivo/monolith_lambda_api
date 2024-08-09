@@ -1,0 +1,14 @@
+model framework_criteria_control_mapping {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  framework_id String   @db.ObjectId // framework::_id.
+  criteria_ids String[] @db.ObjectId // criteria::_id.
+  control_id   String   @db.ObjectId // control::_id.
+  is_custom    Boolean
+  customer_id  String   @db.ObjectId // customer::_id when is_custom is true.
+
+  @@index([framework_id])
+  @@index([is_custom])
+  @@index([customer_id])
+
+  @@unique([framework_id,control_id])
+}
