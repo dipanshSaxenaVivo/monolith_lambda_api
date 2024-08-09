@@ -4,7 +4,6 @@ model criteria {
   code         String
   description  String
 
+  @@unique([code, framework_id])
   @@index([framework_id])
-
-  @@unique([code,framework_id])
 }

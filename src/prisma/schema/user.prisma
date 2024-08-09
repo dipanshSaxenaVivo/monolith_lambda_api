@@ -1,0 +1,17 @@
+model user {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  cloud_identity String? // Cognito_Id for now
+  customer_id    String         @db.ObjectId // customer::_id.
+  department_id  String         @db.ObjectId // department::_id.
+  user_pii_enc   Bytes // encrypted user_pii class.
+  email_hash     String
+  role           Int // roleEnum // 0-User,1-SuperAdmin,2-Support,4-Admin,8-Manager,16-Auditor
+  isContractor   Boolean
+  remarks        String?
+  designation    String?
+  joining_date   DateTime?
+  profile_image  objectStorage?
+  custom_data    String? // JSON Object contains key value pair for custom data.
+
+  @@unique([email_hash])
+}

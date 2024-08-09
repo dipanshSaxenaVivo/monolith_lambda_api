@@ -1,0 +1,20 @@
+enum controlState {
+  notStarted
+  notApplicable
+  inProgress
+  readinessComplete
+}
+
+model customer_control {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  customer_id     String       @db.ObjectId // customer::_id.
+  control_id      String       @db.ObjectId // control::_id.
+  domain          String // Departments: IT, HR and Operations etc.
+  owners          String[]     @db.ObjectId // user::_id, only manager type
+  state           controlState // 0:not_started, 1:not_applicable, 2:in_progress, 3:readiness_complete.
+  applicable_from DateTime // Used only when state = 2.
+  custom_data     Json? // JSON Object contains key value pair for custom data.
+
+  @@unique([customer_id, control_id])
+  @@index([customer_id])
+}

@@ -1,0 +1,70 @@
+enum language {
+  en
+}
+
+enum currency {
+  inr
+  usd
+}
+
+enum customerState {
+  demo
+  active
+  suspended
+}
+
+enum industy {
+  itServices
+  hrServices
+  itSaas
+  payrollServices
+  cloudServiceProvider
+  healthcare
+  cyberSecurity
+  bankingAndFinance
+  dataCenterServiceProvider
+  others
+}
+
+type objectStorage {
+  key      String // Actual file name (key) in store.
+  fileName String // User given file name.
+  ts       DateTime
+}
+
+type location {
+  address String
+  email   String
+  phone   String
+}
+
+type legalEntity {
+  name     String
+  location location[]
+}
+
+model customer {
+  id               String          @id @default(auto()) @map("_id") @db.ObjectId
+  framework_ids    String[]        @db.ObjectId
+  name             String
+  email            String
+  phone            String
+  description      String?
+  mailing_address  String
+  billing_address  String
+  industry         industy // 0-IT Services, 1-HR Services, 2-IT SAAS, 3-Payroll Services, 4-Cloud Service Provider, 5-Healthcare, 6-Cyber Security, 7-Banking and Finance, 8-Data Center Service Provider, 9-Others
+  verification_doc objectStorage[] // List of Customer Verification Document
+  legal_entities   legalEntity[] // 
+  spoc_pii_enc     Bytes // encrypted user_pii class. Spoc details
+  spoc_designation String?
+  logo             objectStorage?
+  currency         currency // 0-INR, 1-USD
+  language         language // 0-en
+  time_zone        String // noda time zone key
+  custom_data      Json? // JSON Object contains key value pair for custom data.
+  support_ids      String          @db.ObjectId // List of Support Roles UserId
+  state            customerState // 0-Demo, 1-Active, 2-Suspended
+  active_till      DateTime // active period of the customer, applicable when state = 1
+
+  @@index([name])
+}

@@ -1,0 +1,22 @@
+enum frequency {
+  daily
+  weekly
+  monthly
+  quarterly
+  yearly
+  custom
+}
+
+model test_attribute {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String?
+  code        String
+  description String
+  frequency   frequency // 0:daily, 1:weekly, 2:monthly, 3:quarterly, 4:yearly, 5:custom.
+  custom_days Int? // Number of days when frequency = 5.
+  is_custom   Boolean
+  customer_id String    @db.ObjectId // customer::_id when is_custom is true.
+
+  @@unique([code])
+  @@index([description])
+}

@@ -7,9 +7,8 @@ model control {
   is_custom   Boolean
   customer_id String  @db.ObjectId // customer::_id when is_custom is true.
 
+  @@unique([code])
   @@index([name])
   @@index([description])
   @@index([customer_id])
-
-  @@unique([code])
 }

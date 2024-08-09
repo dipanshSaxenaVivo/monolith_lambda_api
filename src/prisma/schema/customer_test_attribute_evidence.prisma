@@ -1,0 +1,25 @@
+enum test_attribute_evidence_state {
+  pending
+  pass
+  fail
+}
+
+model customer_test_attribute_evidence {
+  id                   String                        @id @default(auto()) @map("_id") @db.ObjectId
+  customer_id          String                        @db.ObjectId // customer::_id.
+  test_attribute_id    String                        @db.ObjectId // test_attribute::_id
+  user_id              String?                       @db.ObjectId // user::_id. User specific evidence optional field
+  parent_id            String?                       @db.ObjectId // customer_test_attribute_evidence::_id Parent id (manager evidence id) for user specific evidences.
+  due_date             DateTime // 
+  state                test_attribute_evidence_state // 0:pending, 1:pass, 2:failed.
+  manual_evidence      objectStorage[] // List of Manual Evidence.
+  integration_type     integrationType // 0:none, 1:api, 2:vas
+  integration_evidence String // Applicable when evidence_type is not 0.
+  remarks              String?
+
+  @@index([customer_id])
+  @@index([test_attribute_id])
+  @@index([user_id])
+  @@index([parent_id])
+  @@index([due_date])
+}

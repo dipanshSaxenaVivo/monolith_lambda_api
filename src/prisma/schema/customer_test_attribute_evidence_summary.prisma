@@ -1,0 +1,19 @@
+enum evidenceTrackerState {
+  pending
+  pass
+  failed
+}
+
+type evidenceTracker {
+  customer_test_attribute_evidence_id String               @db.ObjectId
+  state                               evidenceTrackerState
+}
+
+model customer_test_attribute_evidence_summary {
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  customer_id       String            @db.ObjectId // customer::_id.
+  test_attribute_id String            @db.ObjectId // test_attribute::_id.
+  evidences         evidenceTracker[]
+
+  @@unique([customer_id, test_attribute_id])
+}

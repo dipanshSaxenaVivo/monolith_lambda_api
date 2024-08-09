@@ -1,0 +1,22 @@
+enum integrationType {
+  none
+  api
+  vas
+}
+
+model customer_test_attribute {
+  id                 String          @id @default(auto()) @map("_id") @db.ObjectId
+  customer_id        String          @db.ObjectId // customer::_id.
+  test_attribute_id  String          @db.ObjectId // test_attribute::_id
+  is_applicable      Boolean // 
+  integration_type   integrationType // 0:none, 1:api, 2:vas
+  frequency          frequency // 0:daily, 1:weekly, 2:monthly, 3:quarterly, 4:yearly, 5:custom.
+  recurrence_day     Int? //  Day of week when frequency = 1, Day of month when frequency = 2/3, Number of days when frequency = 5.
+  recurrence_date    DateTime? // Day-Month when frequency = 4
+  next_due_date_time DateTime? // Next due date time in UTC.
+  custom_data        Json? // JSON Object contains key value pair for custom data.
+
+  @@unique([customer_id, test_attribute_id])
+  @@index([customer_id])
+  @@index([next_due_date_time])
+}

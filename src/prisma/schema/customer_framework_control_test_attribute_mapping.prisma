@@ -1,0 +1,13 @@
+model customer_framework_control_test_attribute_mapping {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  customer_id       String @db.ObjectId // customer::_id.
+  framework_id      String @db.ObjectId // framework::_id.
+  control_id        String @db.ObjectId // control::_id.
+  test_attribute_id String @db.ObjectId // test_attribute::_id.
+
+  @@unique([customer_id, framework_id, control_id, test_attribute_id])
+  @@index([control_id])
+  @@index([customer_id])
+  @@index([framework_id])
+  @@index([test_attribute_id])
+}

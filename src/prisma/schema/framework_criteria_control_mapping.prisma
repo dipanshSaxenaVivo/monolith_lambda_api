@@ -6,9 +6,8 @@ model framework_criteria_control_mapping {
   is_custom    Boolean
   customer_id  String   @db.ObjectId // customer::_id when is_custom is true.
 
+  @@unique([framework_id, control_id])
   @@index([framework_id])
   @@index([is_custom])
   @@index([customer_id])
-
-  @@unique([framework_id,control_id])
 }

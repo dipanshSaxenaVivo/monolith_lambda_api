@@ -1,0 +1,13 @@
+model control_test_attribute_mapping {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  control_id        String  @db.ObjectId // control::_id
+  test_attribute_id String  @db.ObjectId // test_attribute::_id
+  is_custom         Boolean
+  customer_id       String  @db.ObjectId // customer::_id when is_custom is true.
+
+  @@unique([control_id, test_attribute_id])
+  @@index([control_id])
+  @@index([customer_id])
+  @@index([is_custom])
+  @@index([test_attribute_id])
+}
