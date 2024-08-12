@@ -43,6 +43,8 @@ type legalEntity {
   location location[]
 }
 
+// event for change
+// Create, Update, Delete
 model customer {
   id               String          @id @default(auto()) @map("_id") @db.ObjectId
   framework_ids    String[]        @db.ObjectId
@@ -65,6 +67,13 @@ model customer {
   support_ids      String          @db.ObjectId // List of Support Roles UserId
   state            customerState // 0-Demo, 1-Active, 2-Suspended
   active_till      DateTime // active period of the customer, applicable when state = 1
+
+  // trackable fields
+  deleted Boolean
+  cBy     String   @db.ObjectId
+  cTs     DateTime
+  mBy     String   @db.ObjectId
+  mTs     DateTime
 
   @@index([name])
 }

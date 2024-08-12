@@ -1,0 +1,33 @@
+enum auditStage {
+  draft
+  inProgress
+  complete
+  abort
+}
+
+// event for change
+// Create, Update, Delete
+model audit {
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  customer_id     String          @db.ObjectId // customer::_id
+  framework_ids   String[]        @db.ObjectId // framework::_ids, can not change after state is 1
+  name            String // 
+  state           auditStage // 0-draft,1-in_progress,2-complete,3-abort
+  start_date      DateTime // can update only if state = 0
+  end_date        DateTime // can update only if state = 0
+  auditor_id      String?         @db.ObjectId // auditor::_id, can update only if state = 0
+  audit_documents objectStorage[] // Support role user/Customer will upload the audit documents.
+  audit_reports   objectStorage[] // Auditor will upload the audit_report after completion of audit.
+
+  // trackable fields
+  deleted Boolean
+  cBy     String   @db.ObjectId
+  cTs     DateTime
+  mBy     String   @db.ObjectId
+  mTs     DateTime
+
+  @@index([customer_id])
+  @@index([name])
+  @@index([state])
+  @@index([auditor_id])
+}

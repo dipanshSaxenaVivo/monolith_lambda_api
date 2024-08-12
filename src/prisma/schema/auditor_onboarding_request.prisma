@@ -1,0 +1,33 @@
+enum auditorState {
+  pending
+  accepted
+  rejected
+}
+
+// event for change
+// Create, Update
+model auditor_onboarding_request {
+  id                 String       @id @default(auto()) @map("_id") @db.ObjectId
+  framework_ids      String[]     @db.ObjectId
+  user_pii_enc       Bytes // encrypted user_pii class.
+  email_hash         String
+  designation        String
+  company_name       String
+  website_url        String
+  employee_count     Int
+  reason_to_join     String
+  customer_count     Int
+  expertise          String
+  work_culture       String // Possible Values: Cloud, On Premises, Hybrid
+  geographic_regions String // Possible Values: NAMER, LATAM, EMEA, APAC, USA-Only
+  other_verndors     String // 
+  remarks            String? // 
+  state              auditorState // 0-Pending,1-Accepted,2-Rejected
+  user_id            String?      @db.ObjectId // user::_id, Applicable only when state =1.
+  processed_by       String       @db.ObjectId // user::_id, User who had approved/Rejected the auditor request.
+  request_ts         DateTime
+  processed_ts       DateTime
+
+  @@index([state])
+  @@index([request_ts])
+}

@@ -1,3 +1,5 @@
+// event for change
+// Create, Update, Delete
 model control {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String?
@@ -6,6 +8,13 @@ model control {
   domain      String // Departments: IT, HR and Operations etc.
   is_custom   Boolean
   customer_id String  @db.ObjectId // customer::_id when is_custom is true.
+
+  // trackable fields
+  deleted Boolean
+  cBy     String   @db.ObjectId
+  cTs     DateTime
+  mBy     String   @db.ObjectId
+  mTs     DateTime
 
   @@unique([code])
   @@index([name])

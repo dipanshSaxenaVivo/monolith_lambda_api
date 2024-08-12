@@ -1,0 +1,29 @@
+enum testAttributeEvidenceState {
+  pending
+  pass
+  fail
+}
+
+// event for change
+// Create when audit state change to abort/complete
+model customer_test_attribute_evidence_audit_snapshot {
+  id                      String                     @id @default(auto()) @map("_id") @db.ObjectId
+  audit_id                String                     @db.ObjectId // audit::_id
+  customer_id             String                     @db.ObjectId // customer::_id.
+  test_attribute_id       String                     @db.ObjectId // test_attribute::_id
+  user_id                 String?                    @db.ObjectId // user::_id, User specific evidence optional field
+  parent_id               String?                    @db.ObjectId // customer_test_attribute_evidence::_id Parent id (manager evidence id) for user specific evidences.
+  due_date                DateTime // 
+  is_integration_evidence Boolean // integration evidence is a API response. select only one from is_integration_evidence or is_ack_evidence
+  is_ack_evidence         Boolean // acknowledgement based evidence is a acceptence on VAS related activitty. select only one from is_integration_evidence or is_ack_evidence
+  state                   testAttributeEvidenceState // 0:pending, 1:pass, 2:failed.
+  manual_evidence         objectStorage[] // List of Manual Evidence.
+  integration_evidence    String // When is_integration_evidence is true. The result of API call.
+  ack_evidence            Boolean // When is_ack_evidence is true. 
+  remarks                 String? // 
+  evidence_c_ts           DateTime // 
+  evidence_m_id           String                     @db.ObjectId // user::_id
+  evidence_m_ts           DateTime
+
+  @@index([audit_id])
+}

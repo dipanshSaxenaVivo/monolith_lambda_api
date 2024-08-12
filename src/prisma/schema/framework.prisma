@@ -1,9 +1,18 @@
+// event for change
+// Create, Update, Delete
 model framework {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
   name            String
   description     String
   regulatory_body String
   url             String
+
+  // trackable fields
+  deleted Boolean
+  cBy     String   @db.ObjectId
+  cTs     DateTime
+  mBy     String   @db.ObjectId
+  mTs     DateTime
 
   @@index([name])
 }

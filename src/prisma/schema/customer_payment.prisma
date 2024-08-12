@@ -1,0 +1,24 @@
+model customer_payment {
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  customer_id           String   @db.ObjectId // customer::_id.
+  online                Boolean // 
+  received              Boolean // Used only when online is true.
+  online_transaction_id String // Used only when online is true and received is true.
+  currency              currency // 0-INR, 1-USD
+  amount                Float
+  start_date            DateTime
+  end_date              DateTime
+  remarks               String?
+
+  // trackable fields
+  deleted               Boolean
+  cBy                   String   @db.ObjectId
+  cTs                   DateTime
+  mBy                   String   @db.ObjectId
+  mTs                   DateTime
+
+  @@index([customer_id])
+  @@index([online])
+  @@index([start_date])
+  @@index([end_date])
+}

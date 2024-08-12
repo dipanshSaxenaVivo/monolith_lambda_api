@@ -5,10 +5,12 @@ enum evidenceTrackerState {
 }
 
 type evidenceTracker {
-  customer_test_attribute_evidence_id String               @db.ObjectId
-  state                               evidenceTrackerState
+  customerTestAttributeEvidenceId String               @db.ObjectId
+  state                           evidenceTrackerState
 }
 
+// event for change
+// on add/update of customer_test_attribute_evidence
 model customer_test_attribute_evidence_summary {
   id                String            @id @default(auto()) @map("_id") @db.ObjectId
   customer_id       String            @db.ObjectId // customer::_id.

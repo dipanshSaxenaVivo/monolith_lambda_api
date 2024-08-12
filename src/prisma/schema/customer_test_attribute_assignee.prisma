@@ -1,3 +1,5 @@
+// event for change
+// When users are assigned to TA
 model customer_test_attribute_assignee {
   id                         String @id @default(auto()) @map("_id") @db.ObjectId
   customer_test_attribute_id String @db.ObjectId // customer_test_attribute::_id

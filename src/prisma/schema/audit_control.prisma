@@ -1,0 +1,26 @@
+enum auditControlState {
+  readyForReview
+  requestEvidence
+  acceptEvidence
+}
+
+// event for change
+// Create when audit state change to in_progress,
+// Update
+model audit_control {
+  id          String            @id @default(auto()) @map("_id") @db.ObjectId
+  customer_id String            @db.ObjectId // customer::_id
+  audit_id    String            @db.ObjectId // audit::_id
+  control_id  String            @db.ObjectId // control::_id
+  state       auditControlState // 0-ready_for_review,1-request_evidence,2-accept_evidence
+
+  // trackable fields
+  deleted Boolean
+  cBy     String   @db.ObjectId
+  cTs     DateTime
+  mBy     String   @db.ObjectId
+  mTs     DateTime
+
+  @@unique([audit_id, customer_id, control_id])
+  @@index([audit_id])
+}

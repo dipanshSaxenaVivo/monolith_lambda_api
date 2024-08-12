@@ -1,3 +1,5 @@
+// event for change
+// control-TA:: map/un-map
 model control_test_attribute_mapping {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   control_id        String  @db.ObjectId // control::_id

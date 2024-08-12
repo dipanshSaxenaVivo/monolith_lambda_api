@@ -4,6 +4,8 @@ enum test_attribute_evidence_state {
   fail
 }
 
+// event for change
+// on TA due, on evidance update
 model customer_test_attribute_evidence {
   id                   String                        @id @default(auto()) @map("_id") @db.ObjectId
   customer_id          String                        @db.ObjectId // customer::_id.
@@ -16,6 +18,13 @@ model customer_test_attribute_evidence {
   integration_type     integrationType // 0:none, 1:api, 2:vas
   integration_evidence String // Applicable when evidence_type is not 0.
   remarks              String?
+
+  // trackable fields
+  deleted Boolean
+  cBy     String   @db.ObjectId
+  cTs     DateTime
+  mBy     String   @db.ObjectId
+  mTs     DateTime
 
   @@index([customer_id])
   @@index([test_attribute_id])

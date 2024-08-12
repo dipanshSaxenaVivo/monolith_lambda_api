@@ -1,3 +1,5 @@
+// event for change
+// Create, Update, Delete
 model user {
   id             String         @id @default(auto()) @map("_id") @db.ObjectId
   cloud_identity String? // Cognito_Id for now
@@ -12,6 +14,13 @@ model user {
   joining_date   DateTime?
   profile_image  objectStorage?
   custom_data    String? // JSON Object contains key value pair for custom data.
+
+  // trackable fields
+  deleted Boolean
+  cBy     String   @db.ObjectId
+  cTs     DateTime
+  mBy     String   @db.ObjectId
+  mTs     DateTime
 
   @@unique([email_hash])
 }

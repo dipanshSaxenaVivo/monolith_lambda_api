@@ -7,6 +7,8 @@ enum frequency {
   custom
 }
 
+// event for change
+// Create, Update, Delete
 model test_attribute {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   name        String?
@@ -16,6 +18,13 @@ model test_attribute {
   custom_days Int? // Number of days when frequency = 5.
   is_custom   Boolean
   customer_id String    @db.ObjectId // customer::_id when is_custom is true.
+
+  // trackable fields
+  deleted Boolean
+  cBy     String   @db.ObjectId
+  cTs     DateTime
+  mBy     String   @db.ObjectId
+  mTs     DateTime
 
   @@unique([code])
   @@index([description])

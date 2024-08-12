@@ -1,3 +1,6 @@
+// event for change
+// Map/Un-map control with criteria, 
+// Map/Un-map control with framework
 model framework_criteria_control_mapping {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   framework_id String   @db.ObjectId // framework::_id.

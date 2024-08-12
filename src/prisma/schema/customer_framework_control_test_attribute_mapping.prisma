@@ -1,3 +1,8 @@
+// event for change
+// any add/delete on below doc
+// customer_control
+// customer_test_attribute
+// customer (only if framework list changes)
 model customer_framework_control_test_attribute_mapping {
   id                String @id @default(auto()) @map("_id") @db.ObjectId
   customer_id       String @db.ObjectId // customer::_id.

@@ -1,8 +1,17 @@
+// event for change
+// Create, Update, Delete
 model criteria {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
   framework_id String @db.ObjectId // framework::_id. can not change once created.
   code         String
   description  String
+
+  // trackable fields
+  deleted Boolean
+  cBy     String   @db.ObjectId
+  cTs     DateTime
+  mBy     String   @db.ObjectId
+  mTs     DateTime
 
   @@unique([code, framework_id])
   @@index([framework_id])

@@ -4,6 +4,12 @@ enum integrationType {
   vas
 }
 
+// event for change
+// Update,
+// framework map/un-map to customer,
+// framework map/un-map to control,
+// control map/up-map to TA,
+// on due date/time arrival
 model customer_test_attribute {
   id                 String          @id @default(auto()) @map("_id") @db.ObjectId
   customer_id        String          @db.ObjectId // customer::_id.

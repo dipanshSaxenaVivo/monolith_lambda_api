@@ -1,0 +1,24 @@
+// event for change
+// create
+model audit_control_chat {
+  id                    String          @id @default(auto()) @map("_id") @db.ObjectId
+  customer_id           String          @db.ObjectId // customer::_id
+  audit_control_id      String          @db.ObjectId // audit_control::_id
+  audit_id              String          @db.ObjectId // audit::_id
+  control_id            String          @db.ObjectId // control::_id
+  auditor_id            String          @db.ObjectId // auditor::_id
+  text                  String? // 
+  evidences             objectStorage[] // Api Should handle this optional field on it's own because, Prisma doesn't support optional list so we should decalre it's default value to be empty array i.e. [] 
+  evidence_request      Boolean // 
+  evidence_response     Boolean // 
+  audit_control_chat_id String?         @db.ObjectId // audit_control_chat::_id. It is applicable when evidence_response = True.
+  read                  Boolean // 
+  creator_id            String          @db.ObjectId // user::_id
+  ts                    DateTime
+
+  @@index([customer_id])
+  @@index([audit_control_id])
+  @@index([audit_id])
+  @@index([read])
+  @@index([creator_id])
+}

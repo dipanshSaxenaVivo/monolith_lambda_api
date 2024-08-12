@@ -1,0 +1,11 @@
+model online_transaction {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  customer_payment_id String   @db.ObjectId // customer_payment::_id.
+  success             Boolean // 
+  ts                  DateTime
+  currency            currency // 0-INR, 1-USD
+  amount              Float // 
+  details             String? // Discussion required
+
+  @@index([customer_payment_id])
+}

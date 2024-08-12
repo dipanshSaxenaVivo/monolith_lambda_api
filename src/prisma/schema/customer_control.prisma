@@ -5,6 +5,11 @@ enum controlState {
   readinessComplete
 }
 
+// event for change
+// Update,
+// framework map/un-map to customer,
+// framework map/un-map to control,
+// create/update of customer_test_attribute_evidence
 model customer_control {
   id              String       @id @default(auto()) @map("_id") @db.ObjectId
   customer_id     String       @db.ObjectId // customer::_id.

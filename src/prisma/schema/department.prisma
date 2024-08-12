@@ -1,3 +1,5 @@
+// event for change
+// Create, Update, Delete
 model department {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   customer_id String @db.ObjectId // customer::_id.
